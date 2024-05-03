@@ -44,7 +44,7 @@ function PlatformSettings() {
         </SoftTypography>
         <SoftBox display="flex" py={1} mb={0.25}>
           <SoftBox mt={0.25}>
-            <Switch checked={followsMe} onChange={() => setFollowsMe(!followsMe)} />
+            <Switch checked={followsMe} onChange={() => setFollowsMe(!followsMe)}  />
           </SoftBox>
           <SoftBox width="80%" ml={2}>
             <SoftTypography variant="button" fontWeight="regular" color="text">
