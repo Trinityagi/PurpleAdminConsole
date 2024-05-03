@@ -157,7 +157,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
       </SoftBox>
       <Divider />
       <List>{renderRoutes}</List>
-      <SoftBox pt={2} my={2} mx={2} mt="auto">
+      {/* <SoftBox pt={2} my={2} mx={2} mt="auto">
         <SidenavCard />
         <SoftBox mt={2}>
           <SoftButton
@@ -172,7 +172,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
             upgrade to pro
           </SoftButton>
         </SoftBox>
-      </SoftBox>
+      </SoftBox> */}
     </SidenavRoot>
   );
 }

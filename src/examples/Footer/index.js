@@ -1,17 +1,3 @@
-/**
-=========================================================
-* Soft UI Dashboard React - v4.0.1
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/soft-ui-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
 
 // prop-types is a library for typechecking of props
 import PropTypes from "prop-types";
@@ -51,7 +37,7 @@ function Footer({ company, links }) {
       alignItems="center"
       px={1.5}
     >
-      <SoftBox
+      {/* <SoftBox
         display="flex"
         justifyContent="center"
         alignItems="center"
@@ -73,7 +59,7 @@ function Footer({ company, links }) {
           </SoftTypography>
         </Link>
         for a better web.
-      </SoftBox>
+      </SoftBox> */}
       <SoftBox
         component="ul"
         sx={({ breakpoints }) => ({
@@ -99,12 +85,10 @@ function Footer({ company, links }) {
 
 // Setting default values for the props of Footer
 Footer.defaultProps = {
-  company: { href: "https://www.creative-tim.com/", name: "Creative Tim" },
+  company: { href: "https://www.trinityagi.com", name: "Trinity AGI" },
   links: [
-    { href: "https://www.creative-tim.com/", name: "Creative Tim" },
-    { href: "https://www.creative-tim.com/presentation", name: "About Us" },
-    { href: "https://www.creative-tim.com/blog", name: "Blog" },
-    { href: "https://www.creative-tim.com/license", name: "License" },
+    { href: "https://www.linkedin.com/company/trinityagi", name: "LinkedIn" },
+    { href: "https://www.privacypolicies.com/live/c6838b23-d04d-4290-bdcc-4e1f356271ff", name: "Privacy Policy" },
   ],
 };
 

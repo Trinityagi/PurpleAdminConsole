@@ -33,7 +33,7 @@ function BuildByDevelopers() {
         <Grid container spacing={3}>
           <Grid item xs={12} lg={6}>
             <SoftBox display="flex" flexDirection="column" height="100%">
-              <SoftBox pt={1} mb={0.5}>
+              {/* <SoftBox pt={1} mb={0.5}>
                 <SoftTypography variant="body2" color="text" fontWeight="medium">
                   Build by developers
                 </SoftTypography>
@@ -46,7 +46,7 @@ function BuildByDevelopers() {
                   From colors, cards, typography to complex elements, you will find the full
                   documentation.
                 </SoftTypography>
-              </SoftBox>
+              </SoftBox> */}
               <SoftTypography
                 component="a"
                 href="#"
