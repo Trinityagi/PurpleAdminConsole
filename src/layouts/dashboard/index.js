@@ -14,6 +14,8 @@ import MiniStatisticsCard from "examples/Cards/StatisticsCards/MiniStatisticsCar
 import HorizontalBarChart from "examples/Charts/BarCharts/HorizontalBarChart";
 import GradientLineChart from "examples/Charts/LineCharts/GradientLineChart";
 import ReactSpeedometer from "react-d3-speedometer";
+import Table from "examples/Tables/Table";
+
 // Soft UI Dashboard React base styles
 import typography from "assets/theme/base/typography";
 
@@ -38,7 +40,25 @@ function Dashboard() {
       },
     ],
   };
+  const columns = [
+    { name: 'User Group', align: 'center'}, // Define column names, alignment, and optional width
+    { name: 'Service Usage', align: 'center'},
+  ];
   
+  const rows = [
+    {
+      'User Group': 'HR Group',
+      'Service Usage': '53%',
+    },
+    {
+      'User Group': 'Special Project Group',
+      'Service Usage': '35%',
+    },
+    {
+      'User Group': 'Dev Team',
+      'Service Usage': '12%',
+    },
+  ];
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -138,9 +158,9 @@ function Dashboard() {
             currentValueText={"Policy Health"}
             />
           </Grid>
-          {/* <Grid item xs={12} md={6} lg={4}>
-            <OrderOverview />
-          </Grid> */}
+          <Grid item xs={12} md={6} lg={4}>
+            <Table columns={columns} rows={rows} />
+          </Grid>
         </Grid>
       </SoftBox>
       <Footer />
