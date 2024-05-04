@@ -34,8 +34,6 @@ import GradientLineChart from "examples/Charts/LineCharts/GradientLineChart";
 import typography from "assets/theme/base/typography";
 
 // RTL layout components
-import BuildByDevelopers from "layouts/rtl/components/BuildByDevelopers";
-import WorkWithTheRockets from "layouts/rtl/components/WorkWithTheRockets";
 import Projects from "layouts/rtl/components/Projects";
 import OrderOverview from "layouts/rtl/components/OrderOverview";
 
