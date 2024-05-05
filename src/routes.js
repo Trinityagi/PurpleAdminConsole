@@ -39,7 +39,6 @@ Coded by www.creative-tim.com
 import Dashboard from "layouts/dashboard";
 import Tables from "layouts/tables";
 import Billing from "layouts/billing";
-import VirtualReality from "layouts/virtual-reality";
 import RTL from "layouts/rtl";
 import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
@@ -81,15 +80,6 @@ const routes = [
     route: "/billing",
     icon: <CreditCard size="12px" />,
     component: <Billing />,
-    noCollapse: true,
-  },
-  {
-    type: "collapse",
-    name: "Infra",
-    key: "virtual-reality",
-    route: "/virtual-reality",
-    icon: <Cube size="12px" />,
-    component: <VirtualReality />,
     noCollapse: true,
   },
   {

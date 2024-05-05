@@ -1,15 +1,15 @@
 {
-  "name": "soft-ui-dashboard-react",
+  "name": "purple-shield-admin-console",
   "version": "4.0.1",
-  "author": "Creative Tim",
-  "license": "SEE LICENSE IN <https://www.creative-tim.com/license>",
-  "description": "ReactJS version of Soft UI Dashboard by Creative Tim",
+  "author": "Trinity AGI",
+  "license": "",
+  "description": "Web GUI for Purple Shield Admin Console",
   "bugs": {
-    "url": "https://github.com/creativetimofficial/soft-ui-dashboard-react/issues"
+    "url": "https://github.com/Trinityagi/PurpleAdminConsole/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/creativetimofficial/soft-ui-dashboard-react.git"
+    "url": "git+https://github.com/Trinityagi/PurpleAdminConsole.git"
   },
   "dependencies": {
     "@emotion/cache": "11.11.0",
