@@ -3,6 +3,7 @@ import Grid from "@mui/material/Grid";
 import Icon from "@mui/material/Icon";
 
 // Soft UI Dashboard React components
+import { useEffect, useState } from "react";
 import SoftBox from "components/SoftBox";
 import SoftTypography from "components/SoftTypography";
 
@@ -19,11 +20,16 @@ import Table from "examples/Tables/Table";
 // Soft UI Dashboard React base styles
 import typography from "assets/theme/base/typography";
 
+import {restget} from "../../restcalls";
+
 // Data
 import gradientLineChartData from "layouts/dashboard/data/gradientLineChartData";
 
 function Dashboard() {
   const { size } = typography;
+
+  const [cardsData, setCardsData] = useState({"total_users": 0, "eff_policy": 0, "p95_latency": 0.0, "peek_util": 0});
+
   const chartData = {
     labels: ['Personal Data', 'intellectual Property', 'Personal Data', 'Code Snippet'],
     datasets: [
@@ -38,6 +44,20 @@ function Dashboard() {
     { name: 'User Group', align: 'center'}, // Define column names, alignment, and optional width
     { name: 'Service Usage', align: 'center'},
   ];
+
+  useEffect(() => {
+
+    restget("/api/dashboard")
+      .then((response) => {
+        console.log(response);
+        setCardsData(response['dashboard_data'])
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+
+  }, [])
   
   const rows = [
     {
@@ -62,32 +82,32 @@ function Dashboard() {
             <Grid item xs={12} sm={6} xl={3}>
               <MiniStatisticsCard
                 title={{ text: "Total Users" }}
-                count="100"
-                percentage={{ color: "success", text: "+55%" }}
+                count={cardsData['total_users']}
+                percentage={{ color: "success", text: cardsData["users_added"] }}
                 icon={{ color: "info", component: "paid" }}
               />
             </Grid>
             <Grid item xs={12} sm={6} xl={3}>
               <MiniStatisticsCard
                 title={{ text: "Effective Policy" }}
-                count="4"
-                percentage={{ color: "success", text: "+3%" }}
+                count={cardsData["eff_policy"]}
+                percentage={{ color: "success", text: cardsData["eff_policy_plus"] }}
                 icon={{ color: "info", component: "public" }}
               />
             </Grid>
             <Grid item xs={12} sm={6} xl={3}>
               <MiniStatisticsCard
                 title={{ text: "P95 Latency" }}
-                count="1.8s"
-                percentage={{ color: "error", text: "-2%" }}
+                count={cardsData["p95_latency"] + "s"}
+                percentage={{ color: "error", text: cardsData["p96_latency_delta"]? cardsData["p96_latency_delta"]:"0" + "%"}}
                 icon={{ color: "info", component: "emoji_events" }}
               />
             </Grid>
             <Grid item xs={12} sm={6} xl={3}>
               <MiniStatisticsCard
                 title={{ text: "Peak Utilization" }}
-                count="80%"
-                percentage={{ color: "success", text: "+5%" }}
+                count={cardsData["peek_util"]}
+                percentage={{ color: "success", text: cardsData["peak_util_delta"]? cardsData["peak_util_delta"]:"0" + "%" }}
                 icon={{color: "info",component: "shopping_cart",}}
               />
             </Grid>
