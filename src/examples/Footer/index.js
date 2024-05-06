@@ -87,8 +87,8 @@ function Footer({ company, links }) {
 Footer.defaultProps = {
   company: { href: "https://www.trinityagi.com", name: "Trinity AGI" },
   links: [
-    { href: "https://www.linkedin.com/company/trinityagi", name: "LinkedIn" },
-    { href: "https://www.privacypolicies.com/live/c6838b23-d04d-4290-bdcc-4e1f356271ff", name: "Privacy Policy" },
+    // { href: "https://www.linkedin.com/company/trinityagi", name: "LinkedIn" },
+    // { href: "https://www.privacypolicies.com/live/c6838b23-d04d-4290-bdcc-4e1f356271ff", name: "Privacy Policy" },
   ],
 };
 

@@ -1,18 +1,3 @@
-/**
-=========================================================
-* Soft UI Dashboard React - v4.0.1
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/soft-ui-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 import { useState, useEffect } from "react";
 
 // @mui material components
@@ -95,10 +80,8 @@ function Configurator() {
         px={3}
       >
         <SoftBox>
-          <SoftTypography variant="h5">Soft UI Configurator</SoftTypography>
-          <SoftTypography variant="body2" color="text">
-            See our dashboard options.
-          </SoftTypography>
+          <SoftTypography variant="h5">Trinity AGI</SoftTypography>
+          <SoftTypography variant="body2" color="text"> Plugin Admin Console </SoftTypography>
         </SoftBox>
 
         <Icon
@@ -118,7 +101,7 @@ function Configurator() {
 
       <Divider />
 
-      <SoftBox pt={1.25} pb={3} px={3}>
+      {/* <SoftBox pt={1.25} pb={3} px={3}>
         <SoftBox>
           <SoftTypography variant="h6">Sidenav Colors</SoftTypography>
 
@@ -266,7 +249,7 @@ function Configurator() {
             </SoftButton>
           </SoftBox>
         </SoftBox>
-      </SoftBox>
+      </SoftBox> */}
     </ConfiguratorRoot>
   );
 }
