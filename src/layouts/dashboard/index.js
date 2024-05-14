@@ -126,7 +126,7 @@ function Dashboard() {
         <SoftBox mb={3}>
           <Grid container spacing={3}>
             {/* <Grid item xs={12} lg={7}> */}
-            <Grid item>
+            <Grid item  xs={10} lg={6}>
               <GradientLineChart
                 title="Daily Usage"
                 description={
@@ -146,7 +146,7 @@ function Dashboard() {
                 chart={gradientLineChartData}
               />
             </Grid>
-            <Grid item>
+            <Grid item lg={6}>
               <HorizontalBarChart
               title="Top Effective Policy"
               chart={chartData}
@@ -173,7 +173,7 @@ function Dashboard() {
             currentValueText={"Policy Health"}
             />
           </Grid>
-          <Grid item xs={12} md={6} lg={4}>
+          <Grid item xs={12} md={6} lg={6}>
             <Table columns={columns} rows={rows} />
           </Grid>
         </Grid>
