@@ -125,8 +125,8 @@ function Dashboard() {
         </SoftBox>
         <SoftBox mb={3}>
           <Grid container spacing={3}>
-            
-            <Grid item xs={12} lg={7}>
+            {/* <Grid item xs={12} lg={7}> */}
+            <Grid item>
               <GradientLineChart
                 title="Daily Usage"
                 description={
@@ -142,14 +142,15 @@ function Dashboard() {
                     </SoftTypography>
                   </SoftBox>
                 }
-                height="20.25rem"
+                // height="20.25rem"
                 chart={gradientLineChartData}
               />
             </Grid>
-            <Grid item xs={12} lg={5}>
+            <Grid item>
               <HorizontalBarChart
               title="Top Effective Policy"
               chart={chartData}
+              height="21.4rem"
             />
             </Grid>
           </Grid>
