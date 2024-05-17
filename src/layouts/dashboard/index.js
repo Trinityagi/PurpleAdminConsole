@@ -29,13 +29,14 @@ function Dashboard() {
   const { size } = typography;
 
   const [cardsData, setCardsData] = useState({"total_users": 0, "eff_policy": 0, "p95_latency": 0.0, "peek_util": 0});
+  const [chartDataset, setChartDataset] = useState([0, 0, 0]);
 
   const chartData = {
-    labels: ['Personal Data', 'intellectual Property', 'Personal Data', 'Code Snippet'],
+    labels: ['Personal', 'Financial', 'Communication'],
     datasets: [
       {
         label: 'My Data',
-        data: [0,200,400,600,800],
+        data: chartDataset,
         color: 'primary',
       },
     ],
@@ -51,6 +52,7 @@ function Dashboard() {
       .then((response) => {
         console.log(response);
         setCardsData(response['dashboard_data'])
+        setChartDataset(response.dashboard_data.chart_data_set)
       })
       .catch((err) => {
         console.log(err);
@@ -99,7 +101,7 @@ function Dashboard() {
               <MiniStatisticsCard
                 title={{ text: "P95 Latency" }}
                 count={cardsData["p95_latency"] + "s"}
-                percentage={{ color: "error", text: cardsData["p96_latency_delta"]? cardsData["p96_latency_delta"]:"0" + "%"}}
+                percentage={{ color: "error", text: cardsData["p95_latency_delta"]? cardsData["p95_latency_delta"]:"0" + "%"}}
                 icon={{ color: "info", component: "emoji_events" }}
               />
             </Grid>
