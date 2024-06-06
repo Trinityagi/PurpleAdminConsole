@@ -1,7 +1,7 @@
 
 import fetch from "isomorphic-fetch";
 
-const BACKEND_HOST = "http://localhost:8000";
+const BACKEND_HOST = "https://pshield.trinityagi.com/";
 
 
 
