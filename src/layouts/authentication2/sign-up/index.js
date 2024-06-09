@@ -29,12 +29,11 @@ import SoftInput from "components/SoftInput";
 import SoftButton from "components/SoftButton";
 
 // Authentication layout components
-import BasicLayout from "layouts/authentication/components/BasicLayout";
-import Socials from "layouts/authentication/components/Socials";
-import Separator from "layouts/authentication/components/Separator";
+import BasicLayout from "layouts/authentication2/components/BasicLayout";
+import Socials from "layouts/authentication2/components/Socials";
+import Separator from "layouts/authentication2/components/Separator";
 
 // Images
-import curved6 from "assets/images/curved-images/curved14.jpg";
 
 function SignUp() {
   const [agreement, setAgremment] = useState(true);
@@ -45,7 +44,6 @@ function SignUp() {
     <BasicLayout
       title="Welcome!"
       description="Use these awesome forms to login or create new account in your project for free."
-      image={curved6}
     >
       <Card>
         <SoftBox p={3} mb={1} textAlign="center">

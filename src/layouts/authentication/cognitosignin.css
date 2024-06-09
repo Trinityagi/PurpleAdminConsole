@@ -1,0 +1,60 @@
+/* App.css */
+
+.app-container {
+  display: flex;
+}
+
+.logout-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.sidebar {
+  width: 200px;
+  background-color: #f0f0f0;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #ccc;
+}
+
+li:hover {
+  background-color: #eaeaea;
+}
+
+.profile, .settings {
+  padding: 20px;
+}
+
+.profile h2, .settings h2 {
+  margin-top: 0;
+}
+
+[data-amplify-authenticator] {
+  --amplify-components-authenticator-router-box-shadow: 0 0 16px var(--amplify-colors-overlay-10);
+  --amplify-components-authenticator-router-border-width: 0;
+  --amplify-components-authenticator-form-padding: var(--amplify-space-medium) var(--amplify-space-xl) var(--amplify-space-xl);
+  --amplify-components-button-primary-background-color: var(--amplify-colors-neutral-100);
+  --amplify-components-button-primary-hover-background-color: var(--amplify-colors-purple-80);
+  --amplify-components-fieldcontrol-focus-box-shadow: 0 0 0 2px var(--amplify-colors-purple-60);
+  --amplify-components-tabs-item-active-border-color: var(--amplify-colors-purple-100);
+  --amplify-components-tabs-item-color: var(--amplify-colors-purple-50);
+  --amplify-components-tabs-item-active-color: var(--amplify-colors-purple-80);
+  --amplify-components-button-link-color: var(--amplify-colors-purple-80);
+  --amplify-components-button-link-hover-color: var(--amplify-colors-purple-80);
+  --amplify-components-button-link-active-background-color: var(--amplify-colors-purple-50);
+  --amplify-components-button-link-hover-background-color: var(--amplify-colors-purple-40);
+}

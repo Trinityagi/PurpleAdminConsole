@@ -9,8 +9,8 @@ import SoftTypography from "components/SoftTypography";
 
 // Soft UI Dashboard React examples
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Footer from "examples/Footer";
+import DashboardNavbar from "components/DashboardNavbar";
+import Footer from "components/Footer";
 import MiniStatisticsCard from "examples/Cards/StatisticsCards/MiniStatisticsCard";
 import HorizontalBarChart from "examples/Charts/BarCharts/HorizontalBarChart";
 import GradientLineChart from "examples/Charts/LineCharts/GradientLineChart";
@@ -28,7 +28,7 @@ import gradientLineChartData from "layouts/dashboard/data/gradientLineChartData"
 function Dashboard() {
   const { size } = typography;
 
-  const [cardsData, setCardsData] = useState({"total_users": 0, "eff_policy": 0, "p95_latency": 0.0, "peek_util": 0});
+  const [cardsData, setCardsData] = useState({"total_users": 0, "eff_policy": 0, "p95_latency": 0.0, "peek_util": 0, "feedbacks_count": 10});
   const [chartDataset, setChartDataset] = useState([0, 0, 0]);
 
   const chartData = {
@@ -75,9 +75,10 @@ function Dashboard() {
       'Service Usage': '12%',
     },
   ];
+  console.log("cardsData: ", cardsData);
   return (
     <DashboardLayout>
-      <DashboardNavbar />
+      <DashboardNavbar notifCount={cardsData['feedbacks_count']} />
       <SoftBox py={3}>
         <SoftBox mb={3}>
           <Grid container spacing={3}>

@@ -6,7 +6,7 @@ import SoftBox from "components/SoftBox";
 
 // Soft UI Dashboard React examples
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import Footer from "examples/Footer";
+import Footer from "components/Footer";
 
 function Overview() {
   return (

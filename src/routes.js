@@ -41,8 +41,11 @@ import Tables from "layouts/tables";
 import Billing from "layouts/billing";
 import RTL from "layouts/rtl";
 import Profile from "layouts/profile";
-import SignIn from "layouts/authentication/sign-in";
-import SignUp from "layouts/authentication/sign-up";
+
+import CognitoSignIn from "layouts/authentication/cognitosignin"
+
+import SignIn from "layouts/authentication2/sign-in";
+import SignUp from "layouts/authentication2/sign-up";
 
 // Soft UI Dashboard React icons
 import Shop from "examples/Icons/Shop";
@@ -55,6 +58,15 @@ import CreditCard from "examples/Icons/CreditCard";
 import Cube from "examples/Icons/Cube";
 
 const routes = [
+  {
+    type: "collapse",
+    name: "Sign-In",
+    key: "signin",
+    route: "/login",
+    icon: <Shop size="12px" />,
+    component: <CognitoSignIn />,
+    noCollapse: true,
+  },
   {
     type: "collapse",
     name: "Dashboard",

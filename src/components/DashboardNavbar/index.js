@@ -29,7 +29,7 @@ import {
   navbarRow,
   navbarIconButton,
   navbarMobileMenu,
-} from "examples/Navbars/DashboardNavbar/styles";
+} from "components/DashboardNavbar/styles";
 
 // Soft UI Dashboard React context
 import {
@@ -40,10 +40,11 @@ import {
 } from "context";
 
 // Images
-import team2 from "assets/images/team-2.jpg";
 import logoSpotify from "assets/images/small-logos/logo-spotify.svg";
+import SoftBadge from "../SoftBadge";
+import SoftAlert from "../SoftAlert";
 
-function DashboardNavbar({ absolute, light, isMini }) {
+function DashboardNavbar({ absolute, light, isMini, notifCount }) {
   const [navbarType, setNavbarType] = useState();
   const [controller, dispatch] = useSoftUIController();
   const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator } = controller;
@@ -139,7 +140,17 @@ function DashboardNavbar({ absolute, light, isMini }) {
               />
             </SoftBox>
             <SoftBox color={light ? "white" : "inherit"}>
-              <Link to="/authentication/sign-in">
+              <IconButton sx={navbarIconButton} size="small" onClick={() => {window.alert("You have got feedback from the users!")}}>
+                <Icon
+                  sx={({ palette: { dark, white } }) => ({
+                    color: light ? white.main : dark.main,
+                  })}
+                >
+                  notifications
+                </Icon>
+                {notifCount > 0 && (<SoftBadge circular variant="gradient" indicator  badgeContent={notifCount} color={"success"} size="xs" container></SoftBadge>)}
+
+              </IconButton>
                 <IconButton sx={navbarIconButton} size="small">
                   <Icon
                     sx={({ palette: { dark, white } }) => ({
@@ -148,15 +159,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
                   >
                     account_circle
                   </Icon>
-                  <SoftTypography
-                    variant="button"
-                    fontWeight="medium"
-                    color={light ? "white" : "dark"}
-                  >
-                    Sign in
-                  </SoftTypography>
                 </IconButton>
-              </Link>
               {/* <IconButton
                 size="small"
                 color="inherit"
@@ -200,6 +203,7 @@ DashboardNavbar.defaultProps = {
   absolute: false,
   light: false,
   isMini: false,
+  notifCount: 0,
 };
 
 // Typechecking props for the DashboardNavbar
@@ -207,6 +211,7 @@ DashboardNavbar.propTypes = {
   absolute: PropTypes.bool,
   light: PropTypes.bool,
   isMini: PropTypes.bool,
+  notifCount: PropTypes.number
 };
 
 export default DashboardNavbar;

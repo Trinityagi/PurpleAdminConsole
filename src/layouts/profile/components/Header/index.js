@@ -28,7 +28,7 @@ import SoftTypography from "components/SoftTypography";
 import SoftAvatar from "components/SoftAvatar";
 
 // Soft UI Dashboard React examples
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+import DashboardNavbar from "components/DashboardNavbar";
 
 // Soft UI Dashboard React icons
 import Cube from "examples/Icons/Cube";

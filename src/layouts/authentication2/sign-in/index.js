@@ -28,10 +28,9 @@ import SoftInput from "components/SoftInput";
 import SoftButton from "components/SoftButton";
 
 // Authentication layout components
-import CoverLayout from "layouts/authentication/components/CoverLayout";
+import CoverLayout from "layouts/authentication2/components/CoverLayout";
 
 // Images
-import curved9 from "assets/images/curved-images/curved-6.jpg";
 
 function SignIn() {
   const [rememberMe, setRememberMe] = useState(true);
@@ -42,7 +41,6 @@ function SignIn() {
     <CoverLayout
       title="Welcome back"
       description="Enter your email and password to sign in"
-      image={curved9}
     >
       <SoftBox component="form" role="form">
         <SoftBox mb={2}>

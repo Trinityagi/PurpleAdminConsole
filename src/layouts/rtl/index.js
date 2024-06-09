@@ -5,8 +5,8 @@ import SoftBox from "components/SoftBox";
 
 // Soft UI Dashboard React examples
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Footer from "examples/Footer";
+import DashboardNavbar from "components/DashboardNavbar";
+import Footer from "components/Footer";
 
 // Soft UI Dashboard React base styles
 import typography from "assets/theme/base/typography";

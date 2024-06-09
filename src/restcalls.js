@@ -1,9 +1,8 @@
 
 import fetch from "isomorphic-fetch";
 
-const BACKEND_HOST = "http://localhost:8000";
-
-
+const BACKEND_HOST = "https://pshield.trinityagi.com";
+// const BACKEND_HOST = "http://localhost:8000";
 
 export function restget(endpoint) {
   let user_details = { "trinity_plugin_user": "" };
