@@ -92,7 +92,7 @@ function Dashboard() {
             </Grid>
             <Grid item xs={12} sm={6} xl={3}>
               <MiniStatisticsCard
-                title={{ text: "Effective Policy" }}
+                title={{ text: "Protected entities" }}
                 count={cardsData["eff_policy"]}
                 percentage={{ color: "success", text: cardsData["eff_policy_plus"] }}
                 icon={{ color: "info", component: "public" }}
