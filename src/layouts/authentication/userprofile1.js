@@ -2,8 +2,9 @@
 
 import {Authenticator, Heading} from "@aws-amplify/ui-react";
 // import router, { useRouter } from 'next/router'
-import { signOut, signIn, signUp } from 'aws-amplify/auth';
+import { signOut, fetchAuthSession, AuthSession } from 'aws-amplify/auth';
 import React, {useEffect} from "react";
+import { setLayout } from "../../context";
 
 // const router = useRouter();
 
@@ -40,6 +41,17 @@ export function UserProfile1(user) {
     console.log("UserProfile1: user", user);
 
     console.log(window.localStorage.getItem("purple_shield_plugin"));
+
+    useEffect(() => {
+        fetchAuthSession().then(session=>{
+
+            //You can print them to see the full objects
+            console.log("session", session)
+            console.log("id token", session.tokens.idToken.toString())
+            console.log("access token", session.tokens.accessToken.toString())
+        })
+        // window.location.href = "/dashboard";
+    }, []);
 
     // If the plugin is installed but not signed-in yet, then signout from Amplify page.
     // purple_shield_plugin = True and trinity_plugin_user not found with user details,
@@ -94,35 +106,10 @@ export function UserProfile1(user) {
 
 
     return <div>
-        <div className="container">
-            <style >{`
-          html,
-          body {
-            height: 100%;
-            background-color: purple; /* Or any other color you prefer */
-            background-image: linear-gradient(to right,#F44336, #9C27B0, #4CAF50);
-          }          
-          body > div:first-child,
-          div#__next,
-          div#__next > div {
-            height: 100%;
-          }
-    `   }</style>
+
             <button className={"logoutbutton"} onClick={handleSignOut}>
                 Sign Out
             </button>
-            <div >
-                <Heading level={4} >
-                    Username: login id not found...!
-                </Heading>
-                {/* Add your sidebar content here */}
-            </div>
-            <div >
-                <Heading level={4} >
-                    User ID: Not found....!
-                </Heading>
-                {/* Rest of your content goes here */}
-            </div>
-        </div>
+
     </div>
 }

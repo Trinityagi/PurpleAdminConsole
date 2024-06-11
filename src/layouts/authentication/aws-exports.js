@@ -16,8 +16,8 @@ const awsmobile = {
             "profile",
             "aws.cognito.signin.user.admin"
         ],
-        "redirectSignIn": "https://pshield.trinityagi.com/",
-        "redirectSignOut": "https://pshield.trinityagi.com/",
+        "redirectSignIn": "https://console.trinityagi.com/",
+        "redirectSignOut": "https://console.trinityagi.com/",
         "responseType": "code"
     },
     "federationTarget": "COGNITO_USER_POOLS",

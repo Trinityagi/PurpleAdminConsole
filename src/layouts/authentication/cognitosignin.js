@@ -2,12 +2,14 @@ import React from 'react';
 import { Amplify } from 'aws-amplify';
 import { signOut } from 'aws-amplify/auth';
 import { AccountSettings } from '@aws-amplify/ui-react';
-// import './cognitosignin.css';
+import './cognitosignin.css';
 import { Authenticator, Heading, useTheme, View, Image, Text, Button, useAuthenticator, Link } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 import awsExports from './aws-exports';
 import {UserProfile1}  from "./userprofile1";
 import {useEffect} from "react";
+import { setLayout, useSoftUIController } from "../../context";
+import { useLocation } from "react-router-dom";
 
 Amplify.configure(awsExports);
 
@@ -50,7 +52,7 @@ const components = {
           height="20%"
           width="20%"
         />
-        <h2>Purple Shield Admin Console</h2>
+        <h2>Purple Shield Console</h2>
       </View>
     );
   },
@@ -61,7 +63,7 @@ const components = {
     return (
         <View textAlign="center" padding={tokens.space.large}>
           <Link href = "https://www.privacypolicies.com/live/c6838b23-d04d-4290-bdcc-4e1f356271ff" color={tokens.colors.purple[80]}> Privacy Policy</Link>
-          <h1>&copy; All Rights Reserved</h1>
+          <p>&copy; All Rights Reserved</p>
         </View>
     );
   },
@@ -270,6 +272,13 @@ const formFields = {
 
 export default function CognitoSignIn(props) {
   console.log("CognitoSignIn props: ", props);
+
+  const [controller, dispatch] = useSoftUIController();
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    setLayout(dispatch, "signin");
+  }, [pathname]);
 
 
   return (

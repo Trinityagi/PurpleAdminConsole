@@ -51,11 +51,17 @@ function Dashboard() {
     restget("/api/dashboard")
       .then((response) => {
         console.log(response);
-        setCardsData(response['dashboard_data'])
-        setChartDataset(response.dashboard_data.chart_data_set)
+        if(response.hasOwnProperty("error")) {
+          window.alert(response.message);
+        }
+        else{
+          setCardsData(response['dashboard_data'])
+          setChartDataset(response.dashboard_data.chart_data_set)
+        }
       })
       .catch((err) => {
         console.log(err);
+        window.alert("Unauthorized");
       });
 
 
