@@ -43,6 +43,7 @@ import RTL from "layouts/rtl";
 import Profile from "layouts/profile";
 
 import CognitoSignIn from "layouts/authentication/cognitosignin"
+import { Authorization } from "layouts/authentication/authorization";
 
 import SignIn from "layouts/authentication2/sign-in";
 import SignUp from "layouts/authentication2/sign-up";
@@ -57,6 +58,7 @@ import CustomerSupport from "examples/Icons/CustomerSupport";
 import CreditCard from "examples/Icons/CreditCard";
 import Cube from "examples/Icons/Cube";
 
+
 const routes = [
   {
     type: "collapse",
@@ -66,6 +68,17 @@ const routes = [
     icon: <Shop size="12px" />,
     component: <CognitoSignIn />,
     noCollapse: true,
+    sidebar: false
+  },
+  {
+    type: "collapse",
+    name: "Authorization",
+    key: "auth",
+    route: "/auth",
+    icon: <Shop size="12px" />,
+    component: <Authorization />,
+    noCollapse: true,
+    sidebar: false
   },
   {
     type: "collapse",
@@ -75,6 +88,7 @@ const routes = [
     icon: <Shop size="12px" />,
     component: <Dashboard />,
     noCollapse: true,
+    sidebar: true
   },
   {
     type: "collapse",
@@ -84,6 +98,7 @@ const routes = [
     icon: <Office size="12px" />,
     component: <Tables />,
     noCollapse: true,
+    sidebar: true
   },
   {
     type: "collapse",
@@ -93,6 +108,7 @@ const routes = [
     icon: <CreditCard size="12px" />,
     component: <Billing />,
     noCollapse: true,
+    sidebar: true
   },
   {
     type: "collapse",
@@ -102,6 +118,7 @@ const routes = [
     icon: <Settings size="12px" />,
     component: <RTL />,
     noCollapse: true,
+    sidebar: true
   },
   {
     type: "collapse",
@@ -111,6 +128,7 @@ const routes = [
     icon: <CustomerSupport size="12px" />,
     component: <Profile />,
     noCollapse: true,
+    sidebar: true
   },
 ];
 

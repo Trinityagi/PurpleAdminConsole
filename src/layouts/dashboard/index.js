@@ -8,7 +8,7 @@ import SoftBox from "components/SoftBox";
 import SoftTypography from "components/SoftTypography";
 
 // Soft UI Dashboard React examples
-import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
+import DashboardLayout from "components/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "components/DashboardNavbar";
 import Footer from "components/Footer";
 import MiniStatisticsCard from "examples/Cards/StatisticsCards/MiniStatisticsCard";
@@ -28,7 +28,7 @@ import gradientLineChartData from "layouts/dashboard/data/gradientLineChartData"
 function Dashboard() {
   const { size } = typography;
 
-  const [cardsData, setCardsData] = useState({"total_users": 0, "eff_policy": 0, "p95_latency": 0.0, "peek_util": 0, "feedbacks_count": 10});
+  const [cardsData, setCardsData] = useState({"total_users": 0, "eff_policy": 0, "p95_latency": 0.0, "peek_util": 0, "feedbacks_count": 0});
   const [chartDataset, setChartDataset] = useState([0, 0, 0]);
 
   const chartData = {
@@ -52,7 +52,7 @@ function Dashboard() {
       .then((response) => {
         console.log(response);
         if(response.hasOwnProperty("error")) {
-          window.alert(response.message);
+          window.location.href = "/auth";
         }
         else{
           setCardsData(response['dashboard_data'])
@@ -61,7 +61,7 @@ function Dashboard() {
       })
       .catch((err) => {
         console.log(err);
-        window.alert("Unauthorized");
+        window.location.href = "/auth";
       });
 
 

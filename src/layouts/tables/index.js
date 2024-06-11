@@ -5,7 +5,7 @@ import Card from "@mui/material/Card";
 import SoftBox from "components/SoftBox";
 
 // Soft UI Dashboard React examples
-import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
+import DashboardLayout from "components/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "components/DashboardNavbar";
 import Footer from "components/Footer";
 

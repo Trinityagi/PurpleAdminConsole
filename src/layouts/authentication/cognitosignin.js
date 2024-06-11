@@ -11,6 +11,7 @@ import {useEffect} from "react";
 import { setLayout, useSoftUIController } from "../../context";
 import { useLocation } from "react-router-dom";
 
+
 Amplify.configure(awsExports);
 
 const styles = {

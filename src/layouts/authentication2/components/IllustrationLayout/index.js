@@ -25,7 +25,7 @@ import SoftTypography from "components/SoftTypography";
 
 // Soft UI Dashboard React examples
 import DefaultNavbar from "examples/Navbars/DefaultNavbar";
-import PageLayout from "examples/LayoutContainers/PageLayout";
+import PageLayout from "components/LayoutContainers/PageLayout";
 
 // Soft UI Dashboard React page layout routes
 import pageRoutes from "page.routes";
