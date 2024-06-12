@@ -19,7 +19,7 @@ import SoftTypography from "components/SoftTypography";
 import SoftInput from "components/SoftInput";
 
 // Soft UI Dashboard React examples
-import Breadcrumbs from "examples/Breadcrumbs";
+import Breadcrumbs from "components/Breadcrumbs";
 import NotificationItem from "examples/Items/NotificationItem";
 
 // Custom styles for DashboardNavbar
@@ -134,7 +134,7 @@ function DashboardNavbar({ absolute, light, isMini, notifCount }) {
         {isMini ? null : (
           <SoftBox sx={(theme) => navbarRow(theme, { isMini })}>
             <SoftBox color={light ? "white" : "inherit"}>
-              <IconButton sx={navbarIconButton} size="small" onClick={() => {window.alert("You have got feedback from the users!")}}>
+              <IconButton sx={navbarIconButton} size="medium" onClick={() => {}}>
                 <Icon
                   sx={({ palette: { dark, white } }) => ({
                     color: light ? white.main : dark.main,
@@ -145,7 +145,7 @@ function DashboardNavbar({ absolute, light, isMini, notifCount }) {
                 {notifCount > 0 && (<SoftBadge circular variant="gradient" indicator  badgeContent={notifCount} color={"success"} size="xs" container></SoftBadge>)}
 
               </IconButton>
-                <IconButton sx={navbarIconButton} size="small">
+                <IconButton sx={navbarIconButton} size="small" onClick={() => {window.alert("User profile")}}>
                   <Icon
                     sx={({ palette: { dark, white } }) => ({
                       color: light ? white.main : dark.main,

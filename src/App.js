@@ -12,7 +12,7 @@ import Icon from "@mui/material/Icon";
 import SoftBox from "components/SoftBox";
 
 // Soft UI Dashboard React examples
-import Sidenav from "examples/Sidenav";
+import Sidenav from "components/Sidenav";
 import Configurator from "examples/Configurator";
 
 // Soft UI Dashboard React themes

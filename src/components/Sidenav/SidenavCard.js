@@ -25,7 +25,7 @@ import SoftBox from "components/SoftBox";
 import SoftTypography from "components/SoftTypography";
 
 // Custom styles for the SidenavCard
-import { card, cardContent, cardIconBox, cardIcon } from "examples/Sidenav/styles/sidenavCard";
+import { card, cardContent, cardIconBox, cardIcon } from "components/Sidenav/styles/sidenavCard";
 
 // Soft UI Dashboard React context
 import { useSoftUIController } from "context";

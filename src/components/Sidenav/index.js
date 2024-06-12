@@ -33,12 +33,12 @@ import SoftTypography from "components/SoftTypography";
 import SoftButton from "components/SoftButton";
 
 // Soft UI Dashboard React examples
-import SidenavCollapse from "examples/Sidenav/SidenavCollapse";
-import SidenavCard from "examples/Sidenav/SidenavCard";
+import SidenavCollapse from "components/Sidenav/SidenavCollapse";
+import SidenavCard from "components/Sidenav/SidenavCard";
 
 // Custom styles for the Sidenav
-import SidenavRoot from "examples/Sidenav/SidenavRoot";
-import sidenavLogoLabel from "examples/Sidenav/styles/sidenav";
+import SidenavRoot from "components/Sidenav/SidenavRoot";
+import sidenavLogoLabel from "components/Sidenav/styles/sidenav";
 
 // Soft UI Dashboard React context
 import { useSoftUIController, setMiniSidenav } from "context";

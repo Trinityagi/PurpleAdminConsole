@@ -2,7 +2,7 @@ import React from 'react';
 import { Amplify } from 'aws-amplify';
 import { signOut } from 'aws-amplify/auth';
 import { AccountSettings } from '@aws-amplify/ui-react';
-import './cognitosignin.css';
+// import './cognitosignin.css';
 import { Authenticator, Heading, useTheme, View, Image, Text, Button, useAuthenticator, Link } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 import awsExports from './aws-exports';
