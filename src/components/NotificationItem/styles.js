@@ -43,7 +43,7 @@ function menuImage(theme, ownerState) {
       : linearGradient(gradients.dark.main, gradients.dark.state),
 
     "& img": {
-      width: "100%",
+      width: "80%",
       borderRadius: borderRadius.lg,
     },
   };

@@ -12,7 +12,7 @@ import SoftBox from "components/SoftBox";
 import SoftTypography from "components/SoftTypography";
 
 // custom styles for the NotificationItem
-import { menuItem, menuImage } from "examples/Items/NotificationItem/styles";
+import { menuItem, menuImage } from "components/NotificationItem/styles";
 
 const NotificationItem = forwardRef(({ color, image, title, date, ...rest }, ref) => (
   <MenuItem {...rest} ref={ref} sx={(theme) => menuItem(theme)}>
@@ -31,27 +31,7 @@ const NotificationItem = forwardRef(({ color, image, title, date, ...rest }, ref
       <SoftTypography variant="button" textTransform="capitalize" fontWeight="regular">
         <strong>{title[0]}</strong> {title[1]}
       </SoftTypography>
-      <SoftTypography
-        variant="caption"
-        color="secondary"
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          mt: 0.5,
-        }}
-      >
-        <SoftTypography variant="button" color="secondary">
-          <Icon
-            sx={{
-              lineHeight: 1.2,
-              mr: 0.5,
-            }}
-          >
-            watch_later
-          </Icon>
-        </SoftTypography>
-        {date}
-      </SoftTypography>
+
     </SoftBox>
   </MenuItem>
 ));

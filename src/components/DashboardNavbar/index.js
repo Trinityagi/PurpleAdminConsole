@@ -6,6 +6,8 @@ import { useLocation, Link } from "react-router-dom";
 // prop-types is a library for typechecking of props.
 import PropTypes from "prop-types";
 
+import icon1 from "assets/images/trinity_agi_logo.svg";
+
 // @material-ui core components
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -20,7 +22,10 @@ import SoftInput from "components/SoftInput";
 
 // Soft UI Dashboard React examples
 import Breadcrumbs from "components/Breadcrumbs";
-import NotificationItem from "examples/Items/NotificationItem";
+import NotificationItem from "components/NotificationItem";
+import SoftMenuItem from "components/SoftMenuItem";
+
+import { signOut } from "aws-amplify/auth";
 
 // Custom styles for DashboardNavbar
 import {
@@ -43,12 +48,20 @@ import {
 import logoSpotify from "assets/images/small-logos/logo-spotify.svg";
 import SoftBadge from "../SoftBadge";
 import SoftAlert from "../SoftAlert";
+import { restget } from "../../restcalls";
+import MenuItem from "@mui/material/MenuItem";
+import { ListItemIcon, ListItemText, MenuList } from "@mui/material";
+import { ContentCut } from "@mui/icons-material";
+import Typography from "@mui/material/Typography";
+import { DropdownMenuSeparator } from "@radix-ui/react-dropdown-menu";
 
 function DashboardNavbar({ absolute, light, isMini, notifCount }) {
   const [navbarType, setNavbarType] = useState();
   const [controller, dispatch] = useSoftUIController();
   const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator } = controller;
   const [openMenu, setOpenMenu] = useState(false);
+  const [userMenu, setUserMenu] = useState(false);
+  const [feedbacks, setFeedbacks] = useState([]);
   const route = useLocation().pathname.split("/").slice(1);
 
   useEffect(() => {
@@ -79,47 +92,99 @@ function DashboardNavbar({ absolute, light, isMini, notifCount }) {
 
   const handleMiniSidenav = () => setMiniSidenav(dispatch, !miniSidenav);
   const handleConfiguratorOpen = () => setOpenConfigurator(dispatch, !openConfigurator);
-  const handleOpenMenu = (event) => setOpenMenu(event.currentTarget);
-  const handleCloseMenu = () => setOpenMenu(false);
+  const handleSignOut = (event) => {
+    signOut().then(() => {window.location.href = "/login"})
+
+  };
+  const handleUserMenu = (event) => setUserMenu(event.currentTarget);
+  const handleOpenMenu = (event) => {
+    setOpenMenu(event.currentTarget);
+    restget("/api/feedbacks")
+      .then((response) => {
+        console.log(response);
+        if(response.hasOwnProperty("error")) {
+          window.location.href = "/auth";
+        }
+        else{
+
+          setFeedbacks(response["feedbacks"]);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        window.location.href = "/auth";
+      });
+  };
+  const handleCloseMenu = () => {
+    setOpenMenu(false);
+    setUserMenu(false);
+  };
 
   // Render the notifications menu
-  // const renderMenu = () => (
-  //   <Menu
-  //     anchorEl={openMenu}
-  //     anchorReference={null}
-  //     anchorOrigin={{
-  //       vertical: "bottom",
-  //       horizontal: "left",
-  //     }}
-  //     open={Boolean(openMenu)}
-  //     onClose={handleCloseMenu}
-  //     sx={{ mt: 2 }}
-  //   >
-  //     <NotificationItem
-  //       image={<img src={team2} alt="person" />}
-  //       title={["New message", "from Laur"]}
-  //       date="13 minutes ago"
-  //       onClick={handleCloseMenu}
-  //     />
-  //     <NotificationItem
-  //       image={<img src={logoSpotify} alt="person" />}
-  //       title={["New album", "by Travis Scott"]}
-  //       date="1 day"
-  //       onClick={handleCloseMenu}
-  //     />
-  //     <NotificationItem
-  //       color="secondary"
-  //       image={
-  //         <Icon fontSize="small" sx={{ color: ({ palette: { white } }) => white.main }}>
-  //           payment
-  //         </Icon>
-  //       }
-  //       title={["", "Payment successfully completed"]}
-  //       date="2 days"
-  //       onClick={handleCloseMenu}
-  //     />
-  //   </Menu>
-  // );
+  const renderMenu = () => {
+
+    let notifs = feedbacks.map((item, index) => (<NotificationItem
+        key={index}
+        image={<img src={icon1} alt="person" />}
+        title={[item['feedback']['problem'], item['feedback']['description']]}
+        color="light"
+        date={item['timeStamp']}
+        onClick={handleCloseMenu}
+      />));
+
+    console.log("openMenu", Boolean(openMenu));
+    console.log("notifs", notifs);
+
+    return (
+      <Menu
+        anchorEl={openMenu}
+        anchorReference={null}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+        open={Boolean(openMenu)}
+        onClose={handleCloseMenu}
+        sx={{ mt: 2 }}
+      >
+        {notifs}
+      </Menu>
+    )
+  };
+
+  const renderUserMenu = () => {
+
+
+    console.log("userMenu", Boolean(userMenu));
+
+    return (
+      <Menu
+        anchorEl={userMenu}
+        anchorReference={null}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+        open={Boolean(userMenu)}
+        onClose={handleCloseMenu}
+        sx={{ mt: 2 }}
+      >
+        <SoftMenuItem
+          image={<img src={icon1} alt="person" />}
+          title={["Profile"]}
+          color="light"
+          onClick={handleCloseMenu}
+        />
+        <SoftMenuItem
+          image={<img src={icon1} alt="person" />}
+          title={["Sign Out"]}
+          color="light"
+          onClick={handleSignOut}
+        />
+
+      </Menu>
+    )
+  };
 
   return (
     <AppBar
@@ -134,7 +199,7 @@ function DashboardNavbar({ absolute, light, isMini, notifCount }) {
         {isMini ? null : (
           <SoftBox sx={(theme) => navbarRow(theme, { isMini })}>
             <SoftBox color={light ? "white" : "inherit"}>
-              <IconButton sx={navbarIconButton} size="medium" onClick={() => {}}>
+              <IconButton sx={navbarIconButton} size="medium" onClick={handleOpenMenu}>
                 <Icon
                   sx={({ palette: { dark, white } }) => ({
                     color: light ? white.main : dark.main,
@@ -145,7 +210,8 @@ function DashboardNavbar({ absolute, light, isMini, notifCount }) {
                 {notifCount > 0 && (<SoftBadge circular variant="gradient" indicator  badgeContent={notifCount} color={"success"} size="xs" container></SoftBadge>)}
 
               </IconButton>
-                <IconButton sx={navbarIconButton} size="small" onClick={() => {window.alert("User profile")}}>
+              {renderMenu()}
+                <IconButton sx={navbarIconButton} size="small" onClick={handleUserMenu}>
                   <Icon
                     sx={({ palette: { dark, white } }) => ({
                       color: light ? white.main : dark.main,
@@ -154,6 +220,7 @@ function DashboardNavbar({ absolute, light, isMini, notifCount }) {
                     account_circle
                   </Icon>
                 </IconButton>
+              {renderUserMenu()}
               {/* <IconButton
                 size="small"
                 color="inherit"
@@ -172,18 +239,8 @@ function DashboardNavbar({ absolute, light, isMini, notifCount }) {
               >
                 <Icon>settings</Icon>
               </IconButton> */}
-              {/* <IconButton
-                size="small"
-                color="inherit"
-                sx={navbarIconButton}
-                aria-controls="notification-menu"
-                aria-haspopup="true"
-                variant="contained"
-                onClick={handleOpenMenu}
-              >
-                <Icon className={light ? "text-white" : "text-dark"}>notifications</Icon>
-              </IconButton> */}
-              {/* {renderMenu()} */}
+
+
             </SoftBox>
           </SoftBox>
         )}
