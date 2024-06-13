@@ -31,12 +31,20 @@ function Dashboard() {
   const [cardsData, setCardsData] = useState({"total_users": 0, "eff_policy": 0, "p95_latency": 0.0, "peek_util": 0, "feedbacks_count": 0});
   const [chartDataset, setChartDataset] = useState([0, 0, 0]);
 
+  console.log(chartDataset);
+  let labels = [];
+  let data = [];
+  for (const key in chartDataset) {
+    const item = chartDataset[key];
+    labels = labels.concat(Object.keys(item))
+    data = data.concat(Object.values(item))
+  }
   const chartData = {
-    labels: ['Personal', 'Financial', 'Communication'],
+    labels: labels,
     datasets: [
       {
         label: 'My Data',
-        data: chartDataset,
+        data: data,
         color: 'primary',
       },
     ],
@@ -63,8 +71,6 @@ function Dashboard() {
         console.log(err);
         window.location.href = "/auth";
       });
-
-
   }, [])
   
   const rows = [
@@ -81,6 +87,7 @@ function Dashboard() {
       'Service Usage': '12%',
     },
   ];
+
   console.log("cardsData: ", cardsData);
   return (
     <DashboardLayout>
@@ -120,16 +127,6 @@ function Dashboard() {
                 icon={{color: "info",component: "shopping_cart",}}
               />
             </Grid>
-          </Grid>
-        </SoftBox>
-        <SoftBox mb={3}>
-          <Grid container spacing={3}>
-            {/* <Grid item xs={12} lg={7}>
-              <BuildByDevelopers />
-            </Grid>
-            <Grid item xs={12} lg={5}>
-              <WorkWithTheRockets />
-            </Grid> */}
           </Grid>
         </SoftBox>
         <SoftBox mb={3}>
