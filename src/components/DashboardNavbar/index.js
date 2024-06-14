@@ -41,14 +41,14 @@ import {
   useSoftUIController,
   setTransparentNavbar,
   setMiniSidenav,
-  setOpenConfigurator,
+  setOpenFeedbacks,
 } from "context";
 
 // Images
 import logoSpotify from "assets/images/small-logos/logo-spotify.svg";
 import SoftBadge from "../SoftBadge";
 import SoftAlert from "../SoftAlert";
-import { restget } from "../../restcalls";
+
 import MenuItem from "@mui/material/MenuItem";
 import { ListItemIcon, ListItemText, MenuList } from "@mui/material";
 import { ContentCut } from "@mui/icons-material";
@@ -58,7 +58,7 @@ import { DropdownMenuSeparator } from "@radix-ui/react-dropdown-menu";
 function DashboardNavbar({ absolute, light, isMini, notifCount }) {
   const [navbarType, setNavbarType] = useState();
   const [controller, dispatch] = useSoftUIController();
-  const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator } = controller;
+  const { miniSidenav, transparentNavbar, fixedNavbar, openFeedbacks } = controller;
   const [openMenu, setOpenMenu] = useState(false);
   const [userMenu, setUserMenu] = useState(false);
   const [feedbacks, setFeedbacks] = useState([]);
@@ -91,30 +91,32 @@ function DashboardNavbar({ absolute, light, isMini, notifCount }) {
   }, [dispatch, fixedNavbar]);
 
   const handleMiniSidenav = () => setMiniSidenav(dispatch, !miniSidenav);
-  const handleConfiguratorOpen = () => setOpenConfigurator(dispatch, !openConfigurator);
+  // const handleConfiguratorOpen = () => setOpenFeedbacks(dispatch, !openFeedbacks);
   const handleSignOut = (event) => {
     signOut().then(() => {window.location.href = "/login"})
 
   };
   const handleUserMenu = (event) => setUserMenu(event.currentTarget);
-  const handleOpenMenu = (event) => {
-    setOpenMenu(event.currentTarget);
-    restget("/api/feedbacks")
-      .then((response) => {
-        console.log(response);
-        if(response.hasOwnProperty("error")) {
-          window.location.href = "/auth";
-        }
-        else{
-
-          setFeedbacks(response["feedbacks"]);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        window.location.href = "/auth";
-      });
-  };
+  // Change the openFeedbacks state
+  const handleOpenMenu = () => setOpenFeedbacks(dispatch, !openFeedbacks);
+  // const handleOpenMenu = (event) => {
+  //   setOpenMenu(event.currentTarget);
+  //   restget("/api/feedbacks")
+  //     .then((response) => {
+  //       console.log(response);
+  //       if(response.hasOwnProperty("error")) {
+  //         window.location.href = "/auth";
+  //       }
+  //       else{
+  //
+  //         setFeedbacks(response["feedbacks"]);
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //       window.location.href = "/auth";
+  //     });
+  // };
   const handleCloseMenu = () => {
     setOpenMenu(false);
     setUserMenu(false);
@@ -210,7 +212,6 @@ function DashboardNavbar({ absolute, light, isMini, notifCount }) {
                 {notifCount > 0 && (<SoftBadge circular variant="gradient" indicator  badgeContent={notifCount} color={"success"} size="xs" container></SoftBadge>)}
 
               </IconButton>
-              {renderMenu()}
                 <IconButton sx={navbarIconButton} size="small" onClick={handleUserMenu}>
                   <Icon
                     sx={({ palette: { dark, white } }) => ({

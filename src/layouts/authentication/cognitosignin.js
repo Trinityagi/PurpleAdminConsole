@@ -63,7 +63,8 @@ const components = {
 
     return (
         <View textAlign="center" padding={tokens.space.large}>
-          <Link href = "https://www.privacypolicies.com/live/c6838b23-d04d-4290-bdcc-4e1f356271ff" color={tokens.colors.purple[80]}> Privacy Policy</Link>
+          {/*<Link href = "https://www.privacypolicies.com/live/c6838b23-d04d-4290-bdcc-4e1f356271ff" color={tokens.colors.purple[80]}> Privacy Policy</Link>*/}
+          <Link href = "https://www.privacypolicies.com/live/35d1c47e-9bb3-43cc-b4ff-405978e44818" color={tokens.colors.purple[80]}> Privacy Policy</Link>
           <p>&copy; All Rights Reserved</p>
         </View>
     );
@@ -100,68 +101,6 @@ const components = {
     },
   },
 
-  SignUp: {
-    Header() {
-      const { tokens } = useTheme();
-
-      return (
-        <Heading
-          padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`}
-          level={3}
-        >
-          Create a new account
-        </Heading>
-      );
-    },
-    Footer() {
-      const { toSignIn } = useAuthenticator();
-
-      return (
-        <View textAlign="center">
-          <Button
-            fontWeight="normal"
-            onClick={toSignIn}
-            size="small"
-            variation="link"
-          >
-            Back to Sign In
-          </Button>
-        </View>
-      );
-    },
-  },
-  ConfirmSignUp: {
-    Header() {
-      const { tokens } = useTheme();
-      return (
-        <Heading
-          padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`}
-          level={3}
-        >
-          Enter Information:
-        </Heading>
-      );
-    },
-    Footer() {
-      return <Text>&nbsp;</Text>;
-    },
-  },
-  SetupTotp: {
-    Header() {
-      const { tokens } = useTheme();
-      return (
-        <Heading
-          padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`}
-          level={3}
-        >
-          Enter Information:
-        </Heading>
-      );
-    },
-    Footer() {
-      return <Text>&nbsp;</Text>;
-    },
-  },
   ConfirmSignIn: {
     Header() {
       const { tokens } = useTheme();
@@ -219,18 +158,6 @@ const formFields = {
       order: 1,
     },
   },
-  signUp: {
-    password: {
-      label: 'Password:',
-      placeholder: 'Enter your Password:',
-      isRequired: false,
-    },
-    confirm_password: {
-      label: 'Confirm Password:',
-      placeholder: 'Confirm your Password:',
-      isRequired: false,
-    },
-  },
   forceNewPassword: {
     password: {
       placeholder: 'Enter your Password:',
@@ -249,17 +176,6 @@ const formFields = {
     },
     confirm_password: {
       placeholder: 'Enter your Password Please:',
-    },
-  },
-  setupTotp: {
-    QR: {
-      totpIssuer: 'test issuer',
-      totpUsername: 'amplify_qr_test_user',
-    },
-    confirmation_code: {
-      label: 'New Label',
-      placeholder: 'Enter your Confirmation Code:',
-      isRequired: false,
     },
   },
   confirmSignIn: {

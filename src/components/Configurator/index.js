@@ -17,7 +17,7 @@ import SoftTypography from "components/SoftTypography";
 import SoftButton from "components/SoftButton";
 
 // Custom styles for the Configurator
-import ConfiguratorRoot from "examples/Configurator/ConfiguratorRoot";
+import ConfiguratorRoot from "components/Configurator/ConfiguratorRoot";
 
 // Soft UI Dashboard React context
 import {
@@ -101,7 +101,7 @@ function Configurator() {
 
       <Divider />
 
-      {/* <SoftBox pt={1.25} pb={3} px={3}>
+      <SoftBox pt={1.25} pb={3} px={3}>
         <SoftBox>
           <SoftTypography variant="h6">Sidenav Colors</SoftTypography>
 
@@ -249,7 +249,7 @@ function Configurator() {
             </SoftButton>
           </SoftBox>
         </SoftBox>
-      </SoftBox> */}
+      </SoftBox>
     </ConfiguratorRoot>
   );
 }

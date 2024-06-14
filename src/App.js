@@ -13,7 +13,8 @@ import SoftBox from "components/SoftBox";
 
 // Soft UI Dashboard React examples
 import Sidenav from "components/Sidenav";
-import Configurator from "examples/Configurator";
+import Configurator from "components/Configurator";
+import FeedbackSideBar from "components/FeedbackSideBar";
 
 // Soft UI Dashboard React themes
 import theme from "assets/theme";
@@ -145,6 +146,20 @@ export default function App() {
   ) : (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      {layout === "dashboard" && (
+        <>
+          <Sidenav
+            color={sidenavColor}
+            brand={brand}
+            brandName="User Feedbacks"
+            routes={routes}
+            onMouseEnter={handleOnMouseEnter}
+            onMouseLeave={handleOnMouseLeave}
+          />
+          <FeedbackSideBar />
+        </>
+      )}
+      {layout === "vr" && <FeedbackSideBar />}
       {layout === "dashboard" && (
         <>
           <Sidenav
