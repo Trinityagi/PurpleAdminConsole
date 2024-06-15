@@ -49,7 +49,8 @@ function FeedbackSideBar() {
   const handleFixedNavbar = () => setFixedNavbar(dispatch, !fixedNavbar);
 
   const renderMenu = () => {
-    console.log(feedbacks);
+    console.log("feedbacks: ", feedbacks);
+    console.log("openFeedbacks: ", openFeedbacks);
 
     let feedbackItems = feedbacks.map((item, index) => (
       {
@@ -91,25 +92,27 @@ function FeedbackSideBar() {
 
   // Use the useEffect hook to change the button state for the sidenav type based on window size.
   useEffect(() => {
+    console.log("Inside useEffect")
 
-    restget("/api/feedbacks")
-      .then((response) => {
-        console.log(response);
-        if (response.hasOwnProperty("error")) {
-          window.location.href = "/auth";
-        } else {
-          setFeedbacks(response["feedbacks"]);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        window.location.href = "/auth";
-      });
-  }, []);
+      console.log("BEFORE RESTGET");
+      if(openFeedbacks){
+        restget("/api/feedbacks")
+          .then((response) => {
+            console.log("FEEDBACK: ", response);
+            if (response.hasOwnProperty("error")) {
+              window.location.href = "/login";
+            } else {
+              setFeedbacks(response["feedbacks"]);
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+            window.location.href = "/auth";
+          });
+      }
 
 
-
-    useEffect(() => {
+    // useEffect(() => {
     // A function that sets the disabled state of the buttons for the sidenav type.
     function handleDisabled() {
       return window.innerWidth > 1200 ? setDisabled(false) : setDisabled(true);
@@ -123,7 +126,7 @@ function FeedbackSideBar() {
 
     // Remove event listener on cleanup
     return () => window.removeEventListener("resize", handleDisabled);
-  }, []);
+    }, [openFeedbacks]);
 
 
 

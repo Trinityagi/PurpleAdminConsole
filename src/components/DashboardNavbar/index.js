@@ -98,7 +98,7 @@ function DashboardNavbar({ absolute, light, isMini, notifCount }) {
   };
   const handleUserMenu = (event) => setUserMenu(event.currentTarget);
   // Change the openFeedbacks state
-  const handleOpenMenu = () => setOpenFeedbacks(dispatch, !openFeedbacks);
+  const handleFeedbackSideBar = () => setOpenFeedbacks(dispatch, !openFeedbacks);
   // const handleOpenMenu = (event) => {
   //   setOpenMenu(event.currentTarget);
   //   restget("/api/feedbacks")
@@ -201,7 +201,7 @@ function DashboardNavbar({ absolute, light, isMini, notifCount }) {
         {isMini ? null : (
           <SoftBox sx={(theme) => navbarRow(theme, { isMini })}>
             <SoftBox color={light ? "white" : "inherit"}>
-              <IconButton sx={navbarIconButton} size="medium" onClick={handleOpenMenu}>
+              <IconButton sx={navbarIconButton} size="medium" onClick={handleFeedbackSideBar}>
                 <Icon
                   sx={({ palette: { dark, white } }) => ({
                     color: light ? white.main : dark.main,

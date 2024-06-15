@@ -69,7 +69,6 @@ function FeedbacksList({ listitems }) {
 
 // Typechecking props for the FeedbacksList
 FeedbacksList.propTypes = {
-  title: PropTypes.string.isRequired,
   listitems: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
