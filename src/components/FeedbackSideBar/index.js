@@ -35,7 +35,6 @@ import Menu from "@mui/material/Menu";
 import FeedbacksList from "../FeedbacksList";
 
 function FeedbackSideBar() {
-  console.log("FeedbackSideBar: ");
   const [controller, dispatch] = useSoftUIController();
   const { openFeedbacks, transparentSidenav, fixedNavbar, sidenavColor } = controller;
   const [disabled, setDisabled] = useState(false);
@@ -49,8 +48,8 @@ function FeedbackSideBar() {
   const handleFixedNavbar = () => setFixedNavbar(dispatch, !fixedNavbar);
 
   const renderMenu = () => {
-    console.log("feedbacks: ", feedbacks);
-    console.log("openFeedbacks: ", openFeedbacks);
+    console.log("renderMenu: openFeedbacks: ", openFeedbacks);
+    console.log("feedbacks: ");
 
     let feedbackItems = feedbacks.map((item, index) => (
       {
@@ -94,8 +93,8 @@ function FeedbackSideBar() {
   useEffect(() => {
     console.log("Inside useEffect")
 
-      console.log("BEFORE RESTGET");
       if(openFeedbacks){
+        console.log("BEFORE RESTGET");
         restget("/api/feedbacks")
           .then((response) => {
             console.log("FEEDBACK: ", response);
@@ -126,7 +125,7 @@ function FeedbackSideBar() {
 
     // Remove event listener on cleanup
     return () => window.removeEventListener("resize", handleDisabled);
-    }, [openFeedbacks]);
+    }, [dispatch, openFeedbacks]);
 
 
 
@@ -175,7 +174,7 @@ function FeedbackSideBar() {
 
       <Divider />
       <div>
-        {renderMenu()}
+        {openFeedbacks && (renderMenu())}
       </div>
 
 

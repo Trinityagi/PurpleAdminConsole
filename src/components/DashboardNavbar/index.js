@@ -156,9 +156,6 @@ function DashboardNavbar({ absolute, light, isMini, notifCount }) {
 
   const renderUserMenu = () => {
 
-
-    console.log("userMenu", Boolean(userMenu));
-
     return (
       <Menu
         anchorEl={userMenu}
