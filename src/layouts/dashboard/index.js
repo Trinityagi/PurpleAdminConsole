@@ -20,6 +20,12 @@ import Table from "examples/Tables/Table";
 // Soft UI Dashboard React base styles
 import typography from "assets/theme/base/typography";
 
+import users_icon from "../../assets/images/users.svg";
+import latency_icon from "../../assets/images/latency.svg";
+import protection_icon from "../../assets/images/protected entities.svg";
+import utilization_icon from "../../assets/images/utilization.svg";
+import test_icon from "../../assets/images/trinity_agi_logo.svg";
+
 import {restget} from "../../restcalls";
 
 // Data
@@ -100,7 +106,8 @@ function Dashboard() {
                 title={{ text: "Total Users" }}
                 count={cardsData['total_users']}
                 percentage={{ color: "success", text: cardsData["users_added"] }}
-                icon={{ color: "info", component: "paid" }}
+                icon={{ color: "info", component: "public" }}
+                iconfile={users_icon}
               />
             </Grid>
             <Grid item xs={12} sm={6} xl={3}>
@@ -109,6 +116,7 @@ function Dashboard() {
                 count={cardsData["eff_policy"]}
                 percentage={{ color: "success", text: cardsData["eff_policy_plus"] }}
                 icon={{ color: "info", component: "public" }}
+                iconfile={protection_icon}
               />
             </Grid>
             <Grid item xs={12} sm={6} xl={3}>
@@ -117,6 +125,7 @@ function Dashboard() {
                 count={cardsData["p95_latency"] + "s"}
                 percentage={{ color: "error", text: cardsData["p95_latency_delta"]? cardsData["p95_latency_delta"]:"0" + "%"}}
                 icon={{ color: "info", component: "emoji_events" }}
+                iconfile={latency_icon}
               />
             </Grid>
             <Grid item xs={12} sm={6} xl={3}>
@@ -125,6 +134,7 @@ function Dashboard() {
                 count={cardsData["peek_util"]}
                 percentage={{ color: "success", text: cardsData["peak_util_delta"]? cardsData["peak_util_delta"]:"0" + "%" }}
                 icon={{color: "info",component: "shopping_cart",}}
+                iconfile={utilization_icon}
               />
             </Grid>
           </Grid>

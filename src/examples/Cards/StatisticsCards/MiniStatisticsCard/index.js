@@ -20,12 +20,14 @@ import PropTypes from "prop-types";
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import Icon from "@mui/material/Icon";
-
+import SvgIcon from '@mui/material/SvgIcon';
 // Soft UI Dashboard React components
 import SoftBox from "components/SoftBox";
 import SoftTypography from "components/SoftTypography";
+import icon1 from "../../../../assets/images/trinity_agi_logo.svg";
 
-function MiniStatisticsCard({ bgColor, title, count, percentage, icon, direction }) {
+function MiniStatisticsCard({ bgColor, title, count, percentage, icon, iconfile, direction }) {
+  console.log("icon: ", icon);
   return (
     <Card>
       <SoftBox bgColor={bgColor} variant="gradient">
@@ -45,8 +47,8 @@ function MiniStatisticsCard({ bgColor, title, count, percentage, icon, direction
                   alignItems="center"
                   shadow="md"
                 >
-                  <Icon fontSize="small" color="inherit">
-                    {icon.component}
+                  <Icon>
+                    <img src={iconfile} height={20} width={20} color="white"/>
                   </Icon>
                 </SoftBox>
               </Grid>
@@ -89,8 +91,8 @@ function MiniStatisticsCard({ bgColor, title, count, percentage, icon, direction
                   alignItems="center"
                   shadow="md"
                 >
-                  <Icon fontSize="small" color="inherit">
-                    {icon.component}
+                  <Icon>
+                    <img src={iconfile} height={20} width={20} color="white"/>
                   </Icon>
                 </SoftBox>
               </Grid>
@@ -149,7 +151,8 @@ MiniStatisticsCard.propTypes = {
   icon: PropTypes.shape({
     color: PropTypes.oneOf(["primary", "secondary", "info", "success", "warning", "error", "dark"]),
     component: PropTypes.node.isRequired,
-  }).isRequired,
+  }),
+  iconfile: PropTypes.object,
   direction: PropTypes.oneOf(["right", "left"]),
 };
 
