@@ -6,7 +6,8 @@ import { useLocation, Link } from "react-router-dom";
 // prop-types is a library for typechecking of props.
 import PropTypes from "prop-types";
 
-import icon1 from "assets/images/trinity_agi_logo.svg";
+import icon1 from "assets/images/users.svg";
+import {ManageAccounts, Logout} from "@mui/icons-material";
 
 // @material-ui core components
 import AppBar from "@mui/material/AppBar";
@@ -173,13 +174,13 @@ function DashboardNavbar({ absolute, light, isMini, notifCount }) {
         sx={{ mt: 2 }}
       >
         <SoftMenuItem
-          image={<img src={icon1} alt="person" />}
+          image= {<ManageAccounts />}
           title={["Profile"]}
           color="light"
           onClick={handleShowProfile}
         />
         <SoftMenuItem
-          image={<img src={icon1} alt="person" />}
+          image={<Logout />}
           title={["Sign Out"]}
           color="light"
           onClick={handleSignOut}

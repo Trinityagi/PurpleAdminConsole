@@ -27,7 +27,6 @@ import SoftTypography from "components/SoftTypography";
 import icon1 from "../../../assets/images/trinity_agi_logo.svg";
 
 function MiniStatisticsCard({ bgColor, title, count, percentage, icon, direction }) {
-  console.log("TTTT ", icon);
   return (
     <Card>
       <SoftBox bgColor={bgColor} variant="gradient">
