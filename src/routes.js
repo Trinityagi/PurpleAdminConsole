@@ -58,6 +58,7 @@ import CustomerSupport from "examples/Icons/CustomerSupport";
 import CreditCard from "examples/Icons/CreditCard";
 import Cube from "examples/Icons/Cube";
 
+import {Dashboard as DashboardIcon, Groups, Timeline, Policy, Preview} from "@mui/icons-material"
 
 const routes = [
   {
@@ -65,7 +66,7 @@ const routes = [
     name: "Sign-In",
     key: "signin",
     route: "/login",
-    icon: <Shop size="12px" />,
+    icon: <DashboardIcon size="12px" />,
     component: <CognitoSignIn />,
     noCollapse: true,
     sidebar: false
@@ -85,7 +86,7 @@ const routes = [
     name: "Dashboard",
     key: "dashboard",
     route: "/dashboard",
-    icon: <Shop size="12px" />,
+    icon: <DashboardIcon size="12px" />,
     component: <Dashboard />,
     noCollapse: true,
     sidebar: true
@@ -95,7 +96,7 @@ const routes = [
     name: "Policy",
     key: "tables",
     route: "/tables",
-    icon: <Office size="12px" />,
+    icon: <Policy size="12px" />,
     component: <Tables />,
     noCollapse: true,
     sidebar: true
@@ -105,7 +106,7 @@ const routes = [
     name: "Monitoring",
     key: "billing",
     route: "/billing",
-    icon: <CreditCard size="12px" />,
+    icon: <Timeline size="12px" />,
     component: <Billing />,
     noCollapse: true,
     sidebar: true
@@ -115,7 +116,7 @@ const routes = [
     name: "Playground",
     key: "rtl",
     route: "/rtl",
-    icon: <Settings size="12px" />,
+    icon: <Preview size="12px" />,
     component: <RTL />,
     noCollapse: true,
     sidebar: true
@@ -125,7 +126,7 @@ const routes = [
     name: "User Groups",
     key: "profile",
     route: "/profile",
-    icon: <CustomerSupport size="12px" />,
+    icon: <Groups size="12px" />,
     component: <Profile />,
     noCollapse: true,
     sidebar: true

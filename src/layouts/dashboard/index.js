@@ -49,7 +49,7 @@ function Dashboard() {
     labels: labels,
     datasets: [
       {
-        label: 'My Data',
+        label: 'Protected',
         data: data,
         color: 'primary',
       },
@@ -106,8 +106,7 @@ function Dashboard() {
                 title={{ text: "Total Users" }}
                 count={cardsData['total_users']}
                 percentage={{ color: "success", text: cardsData["users_added"] }}
-                icon={{ color: "info", component: "public" }}
-                iconfile={users_icon}
+                icon={users_icon}
               />
             </Grid>
             <Grid item xs={12} sm={6} xl={3}>
@@ -115,8 +114,7 @@ function Dashboard() {
                 title={{ text: "Protected entities" }}
                 count={cardsData["eff_policy"]}
                 percentage={{ color: "success", text: cardsData["eff_policy_plus"] }}
-                icon={{ color: "info", component: "public" }}
-                iconfile={protection_icon}
+                icon={protection_icon}
               />
             </Grid>
             <Grid item xs={12} sm={6} xl={3}>
@@ -124,8 +122,7 @@ function Dashboard() {
                 title={{ text: "P95 Latency" }}
                 count={cardsData["p95_latency"] + "s"}
                 percentage={{ color: "error", text: cardsData["p95_latency_delta"]? cardsData["p95_latency_delta"]:"0" + "%"}}
-                icon={{ color: "info", component: "emoji_events" }}
-                iconfile={latency_icon}
+                icon={latency_icon}
               />
             </Grid>
             <Grid item xs={12} sm={6} xl={3}>
@@ -133,8 +130,7 @@ function Dashboard() {
                 title={{ text: "Peak Utilization" }}
                 count={cardsData["peek_util"]}
                 percentage={{ color: "success", text: cardsData["peak_util_delta"]? cardsData["peak_util_delta"]:"0" + "%" }}
-                icon={{color: "info",component: "shopping_cart",}}
-                iconfile={utilization_icon}
+                icon={utilization_icon}
               />
             </Grid>
           </Grid>

@@ -172,7 +172,7 @@ function DashboardNavbar({ absolute, light, isMini, notifCount }) {
           image={<img src={icon1} alt="person" />}
           title={["Profile"]}
           color="light"
-          onClick={handleCloseMenu}
+          onClick={handleFeedbackSideBar}
         />
         <SoftMenuItem
           image={<img src={icon1} alt="person" />}

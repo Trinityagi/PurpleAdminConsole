@@ -26,8 +26,7 @@ import SoftBox from "components/SoftBox";
 import SoftTypography from "components/SoftTypography";
 import icon1 from "../../../../assets/images/trinity_agi_logo.svg";
 
-function MiniStatisticsCard({ bgColor, title, count, percentage, icon, iconfile, direction }) {
-  console.log("icon: ", icon);
+function MiniStatisticsCard({ bgColor, title, count, percentage, icon, direction }) {
   return (
     <Card>
       <SoftBox bgColor={bgColor} variant="gradient">
@@ -37,7 +36,7 @@ function MiniStatisticsCard({ bgColor, title, count, percentage, icon, iconfile,
               <Grid item>
                 <SoftBox
                   variant="gradient"
-                  bgColor={bgColor === "white" ? icon.color : "white"}
+                  bgColor={bgColor === "white" ? "info" : "white"}
                   color={bgColor === "white" ? "white" : "dark"}
                   width="3rem"
                   height="3rem"
@@ -48,7 +47,7 @@ function MiniStatisticsCard({ bgColor, title, count, percentage, icon, iconfile,
                   shadow="md"
                 >
                   <Icon>
-                    <img src={iconfile} height={20} width={20} color="white"/>
+                    <img src={icon} height={20} width={20} color="white"/>
                   </Icon>
                 </SoftBox>
               </Grid>
@@ -70,7 +69,7 @@ function MiniStatisticsCard({ bgColor, title, count, percentage, icon, iconfile,
                   color={bgColor === "white" ? "dark" : "white"}
                 >
                   {count}{" "}
-                  <SoftTypography variant="button" color={percentage.color} fontWeight="bold">
+                  <SoftTypography variant="button" color="info" fontWeight="bold">
                     {percentage.text}
                   </SoftTypography>
                 </SoftTypography>
@@ -80,7 +79,7 @@ function MiniStatisticsCard({ bgColor, title, count, percentage, icon, iconfile,
               <Grid item xs={4}>
                 <SoftBox
                   variant="gradient"
-                  bgColor={bgColor === "white" ? icon.color : "white"}
+                  bgColor={bgColor === "white" ? "info" : "white"}
                   color={bgColor === "white" ? "white" : "dark"}
                   width="3rem"
                   height="3rem"
@@ -92,7 +91,7 @@ function MiniStatisticsCard({ bgColor, title, count, percentage, icon, iconfile,
                   shadow="md"
                 >
                   <Icon>
-                    <img src={iconfile} height={20} width={20} color="white"/>
+                    <img src={icon} height={20} width={20} color="white"/>
                   </Icon>
                 </SoftBox>
               </Grid>
@@ -148,11 +147,7 @@ MiniStatisticsCard.propTypes = {
     ]),
     text: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   }),
-  icon: PropTypes.shape({
-    color: PropTypes.oneOf(["primary", "secondary", "info", "success", "warning", "error", "dark"]),
-    component: PropTypes.node.isRequired,
-  }),
-  iconfile: PropTypes.object,
+  icon: PropTypes.object,
   direction: PropTypes.oneOf(["right", "left"]),
 };
 
