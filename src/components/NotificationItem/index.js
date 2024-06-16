@@ -75,7 +75,7 @@ NotificationItem.propTypes = {
   ]),
   image: PropTypes.node.isRequired,
   title: PropTypes.arrayOf(PropTypes.string).isRequired,
-  date: PropTypes.string.isRequired,
+  date: PropTypes.string,
 };
 
 export default NotificationItem;

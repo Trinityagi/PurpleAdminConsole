@@ -201,8 +201,8 @@ export default function CognitoSignIn(props) {
   return (
     <Authenticator formFields={formFields} components={components} socialProviders={['google']}>
       {({ signOut, user }) => {
-        console.log(user)
-        console.log(signOut)
+        console.log(user);
+        console.log(signOut);
         return (<UserProfile1 user={user}></UserProfile1>)
       }}
     </Authenticator>

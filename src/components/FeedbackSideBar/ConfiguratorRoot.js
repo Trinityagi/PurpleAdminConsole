@@ -19,7 +19,7 @@ import { styled } from "@mui/material/styles";
 
 export default styled(Drawer)(({ theme, ownerState }) => {
   const { boxShadows, functions, transitions } = theme;
-  const { openFeedbacks } = ownerState;
+  const { openFeedbacks, openProfile } = ownerState;
 
   const configuratorWidth = 360;
   const { lg } = boxShadows;
@@ -54,7 +54,7 @@ export default styled(Drawer)(({ theme, ownerState }) => {
       borderRadius: 0,
       boxShadow: lg,
       overflowY: "auto",
-      ...(openFeedbacks ? drawerOpenStyles() : drawerCloseStyles()),
+      ...(openFeedbacks || openProfile ? drawerOpenStyles() : drawerCloseStyles()),
     },
   };
 });

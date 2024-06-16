@@ -1,6 +1,5 @@
-
 import fetch from "isomorphic-fetch";
-import { signOut, fetchAuthSession, AuthSession } from 'aws-amplify/auth';
+import { signOut, fetchAuthSession, AuthSession } from "aws-amplify/auth";
 
 // const BACKEND_HOST = "https://pshield.trinityagi.com";
 const BACKEND_HOST = "http://localhost:8000";
@@ -18,9 +17,8 @@ export async function restget(endpoint) {
     console.log(session);
     token = session.tokens?.idToken?.toString();
     console.log("Token: ", token);
-  }
-  catch (err) {
-    return {"error": 401, "message": "Please log in to proceed."};
+  } catch (err) {
+    return { "error": 401, "message": "Please log in to proceed." };
   }
 
 
@@ -30,7 +28,7 @@ export async function restget(endpoint) {
       "Content-Type": "application/json",
       "User-Id": user_details["trinity_plugin_user"],
       "Authorization": "Bearer " + token,
-    }
+    },
   };
 
   console.log(body);
@@ -40,15 +38,15 @@ export async function restget(endpoint) {
   return fetch(url, body)
     .then((response) => {
       console.log(response);
-      if(response.status !== 200) {
-        return {"error": response.status, "message": response.statusText}
+      if (response.status !== 200) {
+        return { "error": response.status, "message": response.statusText };
       }
       return response.json();
     })
     .catch((err) => {
       console.log(err);
       return err;
-    })
+    });
 
 }
 

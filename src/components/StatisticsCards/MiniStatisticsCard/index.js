@@ -24,9 +24,10 @@ import SvgIcon from '@mui/material/SvgIcon';
 // Soft UI Dashboard React components
 import SoftBox from "components/SoftBox";
 import SoftTypography from "components/SoftTypography";
-import icon1 from "../../../../assets/images/trinity_agi_logo.svg";
+import icon1 from "../../../assets/images/trinity_agi_logo.svg";
 
 function MiniStatisticsCard({ bgColor, title, count, percentage, icon, direction }) {
+  console.log("TTTT ", icon);
   return (
     <Card>
       <SoftBox bgColor={bgColor} variant="gradient">
@@ -147,7 +148,7 @@ MiniStatisticsCard.propTypes = {
     ]),
     text: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   }),
-  icon: PropTypes.object,
+  icon: PropTypes.string,
   direction: PropTypes.oneOf(["right", "left"]),
 };
 

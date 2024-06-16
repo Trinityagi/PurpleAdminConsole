@@ -1,5 +1,9 @@
 import { useState, useEffect } from "react";
 
+
+// Cognito auth components
+import { fetchAuthSession } from "aws-amplify/auth";
+
 // @mui material components
 import Divider from "@mui/material/Divider";
 import Switch from "@mui/material/Switch";
@@ -27,7 +31,7 @@ import {
   setOpenFeedbacks,
   setTransparentSidenav,
   setFixedNavbar,
-  setSidenavColor,
+  setSidenavColor, setOpenProfile,
 } from "context";
 import NotificationItem from "../NotificationItem";
 import icon1 from "../../assets/images/trinity_agi_logo.svg";
@@ -35,35 +39,44 @@ import Menu from "@mui/material/Menu";
 import FeedbacksList from "../FeedbacksList";
 
 function FeedbackSideBar() {
+
   const [controller, dispatch] = useSoftUIController();
-  const { openFeedbacks, transparentSidenav, fixedNavbar, sidenavColor } = controller;
+  const { openFeedbacks, transparentSidenav, fixedNavbar, openProfile } = controller;
   const [disabled, setDisabled] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
   const [feedbacks, setFeedbacks] = useState([]);
+  const [userEmail, setUserEmail] = useState("")
   const sidenavColors = ["primary", "dark", "info", "success", "warning", "error"];
 
-  const handleCloseFeedbacks = () => setOpenFeedbacks(dispatch, false);
+  const handleCloseFeedbacks = () => {
+    console.log("handleCloseFeedbacks: ");
+    setOpenFeedbacks(dispatch, false);
+    setOpenProfile(dispatch, false);
+  };
   const handleTransparentSidenav = () => setTransparentSidenav(dispatch, true);
   const handleWhiteSidenav = () => setTransparentSidenav(dispatch, false);
   const handleFixedNavbar = () => setFixedNavbar(dispatch, !fixedNavbar);
 
+  console.log("renderMenu: openFeedbacks: ", openFeedbacks);
+  console.log("renderMenu: openProfile: ", openProfile);
   const renderMenu = () => {
     console.log("renderMenu: openFeedbacks: ", openFeedbacks);
+    console.log("renderMenu: openProfile: ", openProfile);
     console.log("feedbacks: ");
 
     let feedbackItems = feedbacks.map((item, index) => (
       {
-        name: item['userId'],
-        description: item['feedback']['description'],
-        problem: item['feedback']['problem'],
-        rating: item['feedback']['rating'],
-        timestamp: item['timeStamp'],
+        name: item["userId"],
+        description: item["feedback"]["description"],
+        problem: item["feedback"]["problem"],
+        rating: item["feedback"]["rating"],
+        timestamp: item["timeStamp"],
         action: {
           type: "internal",
           route: "/pages/profile/profile-overview",
           color: "info",
           label: "Action",
-        }
+        },
       }
     ));
 
@@ -91,24 +104,37 @@ function FeedbackSideBar() {
 
   // Use the useEffect hook to change the button state for the sidenav type based on window size.
   useEffect(() => {
-    console.log("Inside useEffect")
+    console.log("Inside useEffect");
 
-      if(openFeedbacks){
-        console.log("BEFORE RESTGET");
-        restget("/api/feedbacks")
-          .then((response) => {
-            console.log("FEEDBACK: ", response);
-            if (response.hasOwnProperty("error")) {
-              window.location.href = "/login";
-            } else {
-              setFeedbacks(response["feedbacks"]);
-            }
-          })
-          .catch((err) => {
-            console.log(err);
-            window.location.href = "/auth";
-          });
-      }
+    if (openFeedbacks) {
+      console.log("BEFORE RESTGET");
+      restget("/api/feedbacks")
+        .then((response) => {
+          console.log("FEEDBACK: ", response);
+          if (response.hasOwnProperty("error")) {
+            window.location.href = "/login";
+          } else {
+            setFeedbacks(response["feedbacks"]);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          window.location.href = "/auth";
+        });
+    }
+
+    if (openProfile) {
+      console.log("Get User profile info");
+      fetchAuthSession()
+        .then((session) => {
+          console.log(session);
+          console.log("USER: ", session.tokens.idToken.payload.email);
+          setUserEmail(session.tokens.idToken.payload.email);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
 
 
     // useEffect(() => {
@@ -125,15 +151,14 @@ function FeedbackSideBar() {
 
     // Remove event listener on cleanup
     return () => window.removeEventListener("resize", handleDisabled);
-    }, [dispatch, openFeedbacks]);
-
+  }, [dispatch, openFeedbacks, openProfile]);
 
 
   // sidenav type buttons styles
   const sidenavTypeButtonsStyles = ({
-    functions: { pxToRem },
-    boxShadows: { buttonBoxShadow },
-  }) => ({
+                                      functions: { pxToRem },
+                                      boxShadows: { buttonBoxShadow },
+                                    }) => ({
     height: pxToRem(42),
     boxShadow: buttonBoxShadow.main,
 
@@ -143,42 +168,73 @@ function FeedbackSideBar() {
   });
 
   return (
-    <ConfiguratorRoot variant="permanent" ownerState={{ openFeedbacks }}>
-      <SoftBox
-        display="flex"
-        justifyContent="space-between"
-        alignItems="baseline"
-        pt={3}
-        pb={0.8}
-        px={3}
-      >
-        <SoftBox>
-          <SoftTypography variant="h5">Feedbacks</SoftTypography>
-          <SoftTypography variant="body2" color="text"> From Purple Shield users </SoftTypography>
+    <div>
+
+      {openFeedbacks && (<ConfiguratorRoot variant="permanent" ownerState={{ openFeedbacks, openProfile }}>
+        <SoftBox
+          display="flex"
+          justifyContent="space-between"
+          alignItems="baseline"
+          pt={3}
+          pb={0.8}
+          px={3}
+        >
+          <SoftBox>
+            <SoftTypography variant="h5">Feedbacks</SoftTypography>
+            <SoftTypography variant="body2" color="text"> From Purple Shield users </SoftTypography>
+          </SoftBox>
+
+          <Icon
+            sx={({ typography: { size, fontWeightBold }, palette: { dark } }) => ({
+              fontSize: `${size.md} !important`,
+              fontWeight: `${fontWeightBold} !important`,
+              stroke: dark.main,
+              strokeWidth: "2px",
+              cursor: "pointer",
+              mt: 2,
+            })}
+            onClick={handleCloseFeedbacks}
+          >
+            close
+          </Icon>
         </SoftBox>
 
-        <Icon
-          sx={({ typography: { size, fontWeightBold }, palette: { dark } }) => ({
-            fontSize: `${size.md} !important`,
-            fontWeight: `${fontWeightBold} !important`,
-            stroke: dark.main,
-            strokeWidth: "2px",
-            cursor: "pointer",
-            mt: 2,
-          })}
-          onClick={handleCloseFeedbacks}
+        <Divider />
+        <div>
+          {openFeedbacks && (renderMenu())}
+        </div>
+      </ConfiguratorRoot>)}
+      {openProfile && (<ConfiguratorRoot variant="permanent" ownerState={{ openFeedbacks, openProfile }}>
+        <SoftBox
+          display="flex"
+          justifyContent="space-between"
+          alignItems="baseline"
+          pt={3}
+          pb={0.8}
+          px={3}
         >
-          close
-        </Icon>
-      </SoftBox>
+          <SoftBox>
+            <SoftTypography variant="h5">Profile</SoftTypography>
+            <SoftTypography variant="body2" color="text"> {userEmail} </SoftTypography>
+          </SoftBox>
 
-      <Divider />
-      <div>
-        {openFeedbacks && (renderMenu())}
-      </div>
-
-
-    </ConfiguratorRoot>
+          <Icon
+            sx={({ typography: { size, fontWeightBold }, palette: { dark } }) => ({
+              fontSize: `${size.md} !important`,
+              fontWeight: `${fontWeightBold} !important`,
+              stroke: dark.main,
+              strokeWidth: "2px",
+              cursor: "pointer",
+              mt: 2,
+            })}
+            onClick={handleCloseFeedbacks}
+          >
+            close
+          </Icon>
+        </SoftBox>
+        <Divider />
+      </ConfiguratorRoot>)}
+    </div>
   );
 }
 

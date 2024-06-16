@@ -53,6 +53,9 @@ function reducer(state, action) {
     case "OPEN_FEEDBACKS": {
       return { ...state, openFeedbacks: action.value };
     }
+    case "OPEN_PROFILE": {
+      return { ...state, openProfile: action.value };
+    }
     case "DIRECTION": {
       return { ...state, direction: action.value };
     }
@@ -75,6 +78,7 @@ function SoftUIControllerProvider({ children }) {
     fixedNavbar: true,
     openConfigurator: false,
     openFeedbacks: false,
+    openProfile: false,
     direction: "ltr",
     layout: "dashboard",
   };
@@ -110,6 +114,7 @@ const setTransparentNavbar = (dispatch, value) => dispatch({ type: "TRANSPARENT_
 const setFixedNavbar = (dispatch, value) => dispatch({ type: "FIXED_NAVBAR", value });
 const setOpenConfigurator = (dispatch, value) => dispatch({ type: "OPEN_CONFIGURATOR", value });
 const setOpenFeedbacks = (dispatch, value) => dispatch({ type: "OPEN_FEEDBACKS", value });
+const setOpenProfile = (dispatch, value) => dispatch({ type: "OPEN_PROFILE", value });
 const setDirection = (dispatch, value) => dispatch({ type: "DIRECTION", value });
 const setLayout = (dispatch, value) => dispatch({ type: "LAYOUT", value });
 
@@ -123,6 +128,7 @@ export {
   setFixedNavbar,
   setOpenConfigurator,
   setOpenFeedbacks,
+  setOpenProfile,
   setDirection,
   setLayout,
 };

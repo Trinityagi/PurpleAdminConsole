@@ -11,7 +11,7 @@ import SoftTypography from "components/SoftTypography";
 import DashboardLayout from "components/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "components/DashboardNavbar";
 import Footer from "components/Footer";
-import MiniStatisticsCard from "examples/Cards/StatisticsCards/MiniStatisticsCard";
+import MiniStatisticsCard from "components/StatisticsCards/MiniStatisticsCard";
 import HorizontalBarChart from "examples/Charts/BarCharts/HorizontalBarChart";
 import GradientLineChart from "examples/Charts/LineCharts/GradientLineChart";
 import ReactSpeedometer from "react-d3-speedometer";

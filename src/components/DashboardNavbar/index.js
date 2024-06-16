@@ -42,6 +42,7 @@ import {
   setTransparentNavbar,
   setMiniSidenav,
   setOpenFeedbacks,
+  setOpenProfile,
 } from "context";
 
 // Images
@@ -58,7 +59,7 @@ import { DropdownMenuSeparator } from "@radix-ui/react-dropdown-menu";
 function DashboardNavbar({ absolute, light, isMini, notifCount }) {
   const [navbarType, setNavbarType] = useState();
   const [controller, dispatch] = useSoftUIController();
-  const { miniSidenav, transparentNavbar, fixedNavbar, openFeedbacks } = controller;
+  const { miniSidenav, transparentNavbar, fixedNavbar, openFeedbacks, openProfile } = controller;
   const [openMenu, setOpenMenu] = useState(false);
   const [userMenu, setUserMenu] = useState(false);
   const [feedbacks, setFeedbacks] = useState([]);
@@ -94,11 +95,14 @@ function DashboardNavbar({ absolute, light, isMini, notifCount }) {
   // const handleConfiguratorOpen = () => setOpenFeedbacks(dispatch, !openFeedbacks);
   const handleSignOut = (event) => {
     signOut().then(() => {window.location.href = "/login"})
-
   };
   const handleUserMenu = (event) => setUserMenu(event.currentTarget);
   // Change the openFeedbacks state
   const handleFeedbackSideBar = () => setOpenFeedbacks(dispatch, !openFeedbacks);
+  const handleShowProfile = () => {
+    handleCloseMenu();
+    setOpenProfile(dispatch, !openProfile);
+  }
   // const handleOpenMenu = (event) => {
   //   setOpenMenu(event.currentTarget);
   //   restget("/api/feedbacks")
@@ -172,7 +176,7 @@ function DashboardNavbar({ absolute, light, isMini, notifCount }) {
           image={<img src={icon1} alt="person" />}
           title={["Profile"]}
           color="light"
-          onClick={handleFeedbackSideBar}
+          onClick={handleShowProfile}
         />
         <SoftMenuItem
           image={<img src={icon1} alt="person" />}
@@ -207,7 +211,6 @@ function DashboardNavbar({ absolute, light, isMini, notifCount }) {
                   notifications
                 </Icon>
                 {notifCount > 0 && (<SoftBadge circular variant="gradient" indicator  badgeContent={notifCount} color={"success"} size="xs" container></SoftBadge>)}
-
               </IconButton>
                 <IconButton sx={navbarIconButton} size="small" onClick={handleUserMenu}>
                   <Icon
@@ -237,8 +240,6 @@ function DashboardNavbar({ absolute, light, isMini, notifCount }) {
               >
                 <Icon>settings</Icon>
               </IconButton> */}
-
-
             </SoftBox>
           </SoftBox>
         )}
