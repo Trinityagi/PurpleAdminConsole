@@ -28,14 +28,12 @@ import test_icon from "../../assets/images/trinity_agi_logo.svg";
 
 import {restget} from "../../restcalls";
 
-// Data
-import gradientLineChartData from "layouts/dashboard/data/gradientLineChartData";
-
 function Dashboard() {
   const { size } = typography;
 
   const [cardsData, setCardsData] = useState({"total_users": 0, "eff_policy": 0, "p95_latency": 0.0, "peek_util": 0, "feedbacks_count": 0});
   const [chartDataset, setChartDataset] = useState([0, 0, 0]);
+  const [queryCounts, setQueryCounts] = useState([]);
 
   console.log(chartDataset);
   let labels = [];
@@ -60,6 +58,39 @@ function Dashboard() {
     { name: 'Service Usage', align: 'center'},
   ];
 
+  console.log("queryCounts: ", queryCounts);
+  let x_axis = []
+  let y1_axis = []
+  Object.keys(queryCounts).forEach(function(key) {
+    console.log('Key : ' + key + ', Value : ' + queryCounts[key]);
+    const date1 = new Date(key);
+    console.log("Month: ", date1.toLocaleString('default', { month: 'short' }));
+    console.log("Date: ", date1.getDate());
+    x_axis.push(date1.toLocaleString('default', { month: 'short' }) + " " + date1.getDate());
+
+    y1_axis.push(queryCounts[key]);
+
+  })
+
+  console.log(x_axis);
+  console.log(y1_axis);
+
+  const dailyUsage = {
+    labels: x_axis,
+    datasets: [
+      {
+        label: "Queries",
+        color: "info",
+        data: y1_axis,
+      },
+      // {
+      //   label: "Websites",
+      //   color: "dark",
+      //   data: [30, 90, 40, 140, 290, 290, 340, 230, 400],
+      // },
+    ],
+  };
+
   useEffect(() => {
 
     restget("/api/dashboard")
@@ -69,8 +100,9 @@ function Dashboard() {
           window.location.href = "/auth";
         }
         else{
-          setCardsData(response['dashboard_data'])
-          setChartDataset(response.dashboard_data.chart_data_set)
+          setCardsData(response['dashboard_data']);
+          setChartDataset(response.dashboard_data.chart_data_set);
+          setQueryCounts(response.dashboard_data.query_counts);
         }
       })
       .catch((err) => {
@@ -143,19 +175,19 @@ function Dashboard() {
                 title="Daily Usage"
                 description={
                   <SoftBox display="flex" alignItems="center">
-                    <SoftBox fontSize={size.lg} color="success" mb={0.3} mr={0.5} lineHeight={0}>
-                      <Icon className="font-bold">arrow_upward</Icon>
-                    </SoftBox>
+                    {/*<SoftBox fontSize={size.lg} color="success" mb={0.3} mr={0.5} lineHeight={0}>*/}
+                    {/*  <Icon className="font-bold">arrow_upward</Icon>*/}
+                    {/*</SoftBox>*/}
                     <SoftTypography variant="button" color="text" fontWeight="medium">
-                      4% more{" "}
+                      {"User Queries"}
                       <SoftTypography variant="button" color="text" fontWeight="regular">
-                        in 2021
+                        {"  "}
                       </SoftTypography>
                     </SoftTypography>
                   </SoftBox>
                 }
                 // height="20.25rem"
-                chart={gradientLineChartData}
+                chart={dailyUsage}
               />
             </Grid>
             <Grid item lg={6}>
@@ -167,28 +199,31 @@ function Dashboard() {
             </Grid>
           </Grid>
         </SoftBox>
-        <div>Service Health</div>
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={6} lg={3}>
-            <ReactSpeedometer 
-            segments={1}
-            segmentColors={["purple",]}
-            value={800}
-            currentValueText={"Infra Health"}
-            />
+        {false && (<SoftBox mb={3}>
+          <div>Service Health</div>
+          <Grid container spacing={3}>
+            <Grid item xs={12} md={6} lg={3}>
+              <ReactSpeedometer
+                segments={1}
+                segmentColors={["purple"]}
+                value={800}
+                currentValueText={"Infra Health"}
+              />
+            </Grid>
+            <Grid item xs={12} md={6} lg={3}>
+              <ReactSpeedometer
+                segments={1}
+                segmentColors={["gray"]}
+                value={500}
+                currentValueText={"Policy Health"}
+              />
+            </Grid>
+            <Grid item xs={12} md={6} lg={6}>
+              <Table columns={columns} rows={rows} />
+            </Grid>
           </Grid>
-          <Grid item xs={12} md={6} lg={3}>
-            <ReactSpeedometer 
-            segments={1}
-            segmentColors={["gray",]}
-            value={500}
-            currentValueText={"Policy Health"}
-            />
-          </Grid>
-          <Grid item xs={12} md={6} lg={6}>
-            <Table columns={columns} rows={rows} />
-          </Grid>
-        </Grid>
+
+        </SoftBox>)}
       </SoftBox>
       <Footer />
     </DashboardLayout>

@@ -127,7 +127,7 @@ export default function App() {
             <Sidenav
               color={sidenavColor}
               brand={brand}
-              brandName="Purple Shield Admin Console"
+              brandName="Purple Shield Console"
               routes={routes}
               onMouseEnter={handleOnMouseEnter}
               onMouseLeave={handleOnMouseLeave}
