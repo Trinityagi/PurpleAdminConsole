@@ -78,7 +78,7 @@ const components = {
       return (
         <Heading
           padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`}
-          level={3}
+          level={4}
         >
           Sign in to your account
         </Heading>
@@ -200,7 +200,12 @@ export default function CognitoSignIn(props) {
 
 
   return (
-    <Authenticator formFields={formFields} components={components} socialProviders={['google']}>
+    <Authenticator
+      formFields={formFields}
+      components={components}
+      socialProviders={['google']}
+      hideSignUp={true}
+    >
       {({ signOut, user }) => {
         console.log(user);
         console.log(signOut);
