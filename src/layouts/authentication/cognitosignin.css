@@ -1,18 +1,71 @@
 /* App.css */
 
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  height: 100vh;
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+          to bottom,
+          transparent,
+          rgb(var(--background-end-rgb))
+  )
+  rgb(var(--background-start-rgb));
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: normal;
+  }
+}
+
+.error-message {
+  color: red;
+}
+
+
+/* CSS from Cognito app */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.greeting {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
 .app-container {
   display: flex;
 }
 
-.logout-button {
+.logoutbutton {
   position: absolute;
   top: 10px;
   right: 10px;
-  padding: 10px;
-  background-color: #007bff;
+  font-size: 16px;
+  padding: 10px 20px;
+  background-color: var(--amplify-colors-purple-80);
   color: #fff;
-  border: none;
+  border-radius: 5px;
   cursor: pointer;
+  z-index: 10; /* Ensure the button stays on top of other elements*/
 }
 
 .sidebar {
@@ -43,18 +96,27 @@ li:hover {
   margin-top: 0;
 }
 
+.mountain-view {
+  display: block;
+  font-size: 0.75em;
+  text-align: center;
+}
+
 [data-amplify-authenticator] {
   --amplify-components-authenticator-router-box-shadow: 0 0 16px var(--amplify-colors-overlay-10);
   --amplify-components-authenticator-router-border-width: 0;
   --amplify-components-authenticator-form-padding: var(--amplify-space-medium) var(--amplify-space-xl) var(--amplify-space-xl);
-  --amplify-components-button-primary-background-color: var(--amplify-colors-neutral-100);
+  --amplify-components-button-primary-background-color: var(--amplify-colors-purple-60);
+  --amplify-components-button-primary-focus-background-color: var(--amplify-colors-purple-50);
   --amplify-components-button-primary-hover-background-color: var(--amplify-colors-purple-80);
   --amplify-components-fieldcontrol-focus-box-shadow: 0 0 0 2px var(--amplify-colors-purple-60);
   --amplify-components-tabs-item-active-border-color: var(--amplify-colors-purple-100);
-  --amplify-components-tabs-item-color: var(--amplify-colors-purple-50);
+
   --amplify-components-tabs-item-active-color: var(--amplify-colors-purple-80);
+  --amplify-components-tabs-item-hover-color: var(--amplify-colors-purple-80);
   --amplify-components-button-link-color: var(--amplify-colors-purple-80);
   --amplify-components-button-link-hover-color: var(--amplify-colors-purple-80);
   --amplify-components-button-link-active-background-color: var(--amplify-colors-purple-50);
-  --amplify-components-button-link-hover-background-color: var(--amplify-colors-purple-40);
+  --amplify-components-button-link-hover-background-color: none;
+  --amplify-colors-font-focus: var(--amplify-colors-red-90);
 }

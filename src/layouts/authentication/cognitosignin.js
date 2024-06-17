@@ -2,9 +2,10 @@ import React from 'react';
 import { Amplify } from 'aws-amplify';
 import { signOut } from 'aws-amplify/auth';
 import { AccountSettings } from '@aws-amplify/ui-react';
-// import './cognitosignin.css';
+import './cognitosignin.css';
 import { Authenticator, Heading, useTheme, View, Image, Text, Button, useAuthenticator, Link } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
+// import './cognitosignin.css';
 import awsExports from './aws-exports';
 import {UserProfile1}  from "./userprofile1";
 import {useEffect} from "react";
@@ -46,7 +47,7 @@ const components = {
     const { tokens } = useTheme();
 
     return (
-      <View textAlign="center" padding={tokens.space.large}>
+      <View className="mountain-view" textAlign="center" padding={tokens.space.large}>
         <Image
           alt="Purple Shield logo"
           src="https://gist.githubusercontent.com/HPradhan09/c980b3f109d21e8acd8cdcc1af666f58/raw/136d9df2b532ec915d98de4ca547313a562da2b8/trinity-logo.svg"
@@ -62,7 +63,7 @@ const components = {
     const { tokens } = useTheme();
 
     return (
-        <View textAlign="center" padding={tokens.space.large}>
+        <View className="mountain-view" textAlign="center" padding={tokens.space.large}>
           {/*<Link href = "https://www.privacypolicies.com/live/c6838b23-d04d-4290-bdcc-4e1f356271ff" color={tokens.colors.purple[80]}> Privacy Policy</Link>*/}
           <Link href = "https://www.privacypolicies.com/live/35d1c47e-9bb3-43cc-b4ff-405978e44818" color={tokens.colors.purple[80]}> Privacy Policy</Link>
           <p>&copy; All Rights Reserved</p>
@@ -87,7 +88,7 @@ const components = {
       const { toForgotPassword } = useAuthenticator();
 
       return (
-        <View textAlign="center">
+        <View className="mountain-view" textAlign="center">
           <Button
             fontWeight="normal"
             onClick={toForgotPassword}
