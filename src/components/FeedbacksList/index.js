@@ -46,9 +46,11 @@ function FeedbacksList({ listitems }) {
 
         <Rating value={rating} size={"small"}></Rating>
         <SoftBadge variant="gradient" badgeContent={problem} color="secondary" size="xs" container/>
-        <SoftTypography variant="caption" color="text">
+        <SoftBox>
+        <SoftTypography  variant="caption" color="text">
           {description}
         </SoftTypography>
+        </SoftBox>
       </SoftBox>
       <SoftBox display="flex" py={0.5}>
         <SoftTypography variant={"caption"} >{timestamp}</SoftTypography>
