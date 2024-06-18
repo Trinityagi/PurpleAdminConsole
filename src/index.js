@@ -20,12 +20,23 @@ import App from "App";
 
 // Soft UI Dashboard React Context Provider
 import { SoftUIControllerProvider } from "context";
+import { Authenticator } from "@aws-amplify/ui-react";
+import { UserProfile1 } from "./layouts/authentication/userprofile1";
+import { components, formFields} from "./layouts/authentication/cognitosignin";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
     <SoftUIControllerProvider>
-      <App />
+      <Authenticator
+        formFields={formFields}
+        components={components}
+        socialProviders={['google']}
+        hideSignUp={true}
+      >
+          <App />
+      </Authenticator>
+
     </SoftUIControllerProvider>
   </BrowserRouter>
 );

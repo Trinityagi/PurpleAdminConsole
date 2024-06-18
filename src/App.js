@@ -2,7 +2,9 @@ import { useState, useEffect, useMemo } from "react";
 
 // react-router components
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
-
+import { withAuthenticator } from '@aws-amplify/ui-react';
+// import awsconfig from 'layouts/authentication/aws-exports'
+// import { Amplify } from 'aws-amplify';
 // @mui material components
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -34,7 +36,8 @@ import { useSoftUIController, setMiniSidenav, setOpenConfigurator } from "contex
 // Images
 import brand from "assets/images/trinity_agi_logo.svg";
 
-export default function App() {
+// Amplify.configure(awsconfig);
+function App() {
   const [controller, dispatch] = useSoftUIController();
   const { miniSidenav, direction, layout, openConfigurator, sidenavColor } = controller;
   const [onMouseEnter, setOnMouseEnter] = useState(false);
@@ -182,3 +185,6 @@ export default function App() {
     </ThemeProvider>
   );
 }
+
+// export default withAuthenticator(App);
+export default App;

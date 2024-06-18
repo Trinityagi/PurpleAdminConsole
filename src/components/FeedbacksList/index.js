@@ -45,7 +45,7 @@ function FeedbacksList({ listitems }) {
         </SoftTypography>
 
         <Rating value={rating} size={"small"}></Rating>
-        <SoftBadge variant="gradient" badgeContent={problem} color="secondary" size="xs" container/>
+        {problem && (<SoftBox><SoftBadge variant="gradient" badgeContent={problem} color="secondary" size="xs" container /></SoftBox>)}
         <SoftBox>
         <SoftTypography  variant="caption" color="text">
           {description}

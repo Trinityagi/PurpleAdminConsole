@@ -6,14 +6,14 @@ import './cognitosignin.css';
 import { Authenticator, Heading, useTheme, View, Image, Text, Button, useAuthenticator, Link } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 // import './cognitosignin.css';
-import awsExports from './aws-exports';
+import awsconfig from './aws-exports';
 import {UserProfile1}  from "./userprofile1";
 import {useEffect} from "react";
 import { setLayout, useSoftUIController } from "../../context";
 import { useLocation } from "react-router-dom";
 
 
-Amplify.configure(awsExports);
+Amplify.configure(awsconfig);
 
 const styles = {
   container: {
@@ -42,7 +42,7 @@ const styles = {
   },
 };
 
-const components = {
+export const components = {
   Header() {
     const { tokens } = useTheme();
 
@@ -152,7 +152,7 @@ const components = {
   },
 };
 
-const formFields = {
+export const formFields = {
   signIn: {
     username: {
       placeholder: 'Enter your email',

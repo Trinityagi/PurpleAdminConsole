@@ -1,0 +1,41 @@
+{
+  "aws_project_region": "us-east-1",
+  "aws_cognito_identity_pool_id": "us-east-1:a781deb4-835e-40df-90f4-800fd53ab430",
+  "aws_cognito_region": "us-east-1",
+  "aws_user_pools_id": "us-east-1_ZBRtYpKZk",
+  "aws_user_pools_web_client_id": "2tkaacdhhmmtbnu5nh166s37b1",
+  "oauth": {
+    "domain": "googleoathfortrinity-dev.auth.us-east-1.amazoncognito.com",
+    "scope": [
+      "phone",
+      "email",
+      "openid",
+      "profile",
+      "aws.cognito.signin.user.admin"
+    ],
+    "redirectSignIn": "https://console.trinityagi.com/",
+    "redirectSignOut": "https://console.trinityagi.com/",
+    "responseType": "code"
+  },
+  "federationTarget": "COGNITO_USER_POOLS",
+  "aws_cognito_username_attributes": [
+    "EMAIL"
+  ],
+  "aws_cognito_social_providers": [
+    "GOOGLE"
+  ],
+  "aws_cognito_signup_attributes": [
+    "EMAIL"
+  ],
+  "aws_cognito_mfa_configuration": "OFF",
+  "aws_cognito_mfa_types": [
+    "SMS"
+  ],
+  "aws_cognito_password_protection_settings": {
+    "passwordPolicyMinLength": 8,
+    "passwordPolicyCharacters": []
+  },
+  "aws_cognito_verification_mechanisms": [
+    "EMAIL"
+  ]
+}

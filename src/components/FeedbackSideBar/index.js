@@ -180,7 +180,7 @@ function FeedbackSideBar() {
           px={3}
         >
           <SoftBox>
-            <SoftTypography variant="h5">Feedbacks</SoftTypography>
+            <SoftTypography variant="h5">Feedback History</SoftTypography>
             <SoftTypography variant="body2" color="text"> From Purple Shield users </SoftTypography>
           </SoftBox>
 
