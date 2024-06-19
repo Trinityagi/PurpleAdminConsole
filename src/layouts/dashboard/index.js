@@ -13,7 +13,7 @@ import DashboardNavbar from "components/DashboardNavbar";
 import Footer from "components/Footer";
 import MiniStatisticsCard from "components/StatisticsCards/MiniStatisticsCard";
 import HorizontalBarChart from "examples/Charts/BarCharts/HorizontalBarChart";
-import GradientLineChart from "examples/Charts/LineCharts/GradientLineChart";
+import GradientLineChart from "components/GradientLineChart";
 import ReactSpeedometer from "react-d3-speedometer";
 import Table from "examples/Tables/Table";
 
@@ -61,19 +61,33 @@ function Dashboard() {
   console.log("queryCounts: ", queryCounts);
   let x_axis = []
   let y1_axis = []
+  let y2_axis = []
   Object.keys(queryCounts).forEach(function(key) {
-    console.log('Key : ' + key + ', Value : ' + queryCounts[key]);
     const date1 = new Date(key);
-    console.log("Month: ", date1.toLocaleString('default', { month: 'short' }));
-    console.log("Date: ", date1.getDate());
     x_axis.push(date1.toLocaleString('default', { month: 'short' }) + " " + date1.getDate());
 
     y1_axis.push(queryCounts[key]);
 
   })
 
+  console.log(cardsData);
+  console.log(cardsData.active_users_counts);
+
+  if(!cardsData.hasOwnProperty("active_users_counts")){
+    cardsData["active_users_counts"] = []
+  }
+
+  Object.keys(cardsData.active_users_counts).forEach(function(key) {
+    const date1 = new Date(key);
+    // x_axis.push(date1.toLocaleString('default', { month: 'short' }) + " " + date1.getDate());
+
+    y2_axis.push(cardsData.active_users_counts[key]);
+
+  })
+
   console.log(x_axis);
   console.log(y1_axis);
+  console.log(y2_axis);
 
   const dailyUsage = {
     labels: x_axis,
@@ -83,11 +97,11 @@ function Dashboard() {
         color: "info",
         data: y1_axis,
       },
-      // {
-      //   label: "Websites",
-      //   color: "dark",
-      //   data: [30, 90, 40, 140, 290, 290, 340, 230, 400],
-      // },
+      {
+        label: "Active Users",
+        color: "dark",
+        data: y2_axis,
+      },
     ],
   };
 
@@ -103,6 +117,7 @@ function Dashboard() {
           setCardsData(response['dashboard_data']);
           setChartDataset(response.dashboard_data.chart_data_set);
           setQueryCounts(response.dashboard_data.query_counts);
+          // setActiveUsersCounts(response.dashboard_data.active_users_count);
         }
       })
       .catch((err) => {
@@ -174,16 +189,23 @@ function Dashboard() {
               <GradientLineChart
                 title="Daily Usage"
                 description={
-                  <SoftBox display="flex" alignItems="center">
-                    {/*<SoftBox fontSize={size.lg} color="success" mb={0.3} mr={0.5} lineHeight={0}>*/}
-                    {/*  <Icon className="font-bold">arrow_upward</Icon>*/}
-                    {/*</SoftBox>*/}
-                    <SoftTypography variant="button" color="text" fontWeight="medium">
+                  <SoftBox display="flex" justifyContent="space-between" alignItems="flex" >
+                    <SoftBox display="flex" >
+                    <SoftBox fontSize={size.lg} color="info" mb={0.3} mr={0.5} lineHeight={0}>
+                      <Icon className="font-bold">arrow_right_alt</Icon>
+                    </SoftBox>
+                    <SoftTypography variant="button" color="text" fontWeight="regular">
                       {"User Queries"}
-                      <SoftTypography variant="button" color="text" fontWeight="regular">
-                        {"  "}
-                      </SoftTypography>
                     </SoftTypography>
+                    </SoftBox>
+                    <SoftBox display="flex" >
+                    <SoftBox fontSize={size.lg} color="dark" mb={0.3} mr={0.5} lineHeight={0}>
+                      <Icon className="font-bold">arrow_right_alt</Icon>
+                    </SoftBox>
+                    <SoftTypography variant="button" color="text" fontWeight="regular">
+                      {"Active Users"}
+                    </SoftTypography>
+                    </SoftBox>
                   </SoftBox>
                 }
                 // height="20.25rem"

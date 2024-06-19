@@ -17,7 +17,7 @@ import SoftTypography from "components/SoftTypography";
 import gradientChartLine from "assets/theme/functions/gradientChartLine";
 
 // GradientLineChart configurations
-import configs from "examples/Charts/LineCharts/GradientLineChart/configs";
+import configs from "components/GradientLineChart/configs";
 
 // Soft UI Dashboard React base styles
 import colors from "assets/theme/base/colors";

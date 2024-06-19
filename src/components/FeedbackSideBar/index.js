@@ -57,12 +57,12 @@ function FeedbackSideBar() {
   const handleWhiteSidenav = () => setTransparentSidenav(dispatch, false);
   const handleFixedNavbar = () => setFixedNavbar(dispatch, !fixedNavbar);
 
-  console.log("renderMenu: openFeedbacks: ", openFeedbacks);
-  console.log("renderMenu: openProfile: ", openProfile);
+  // console.log("renderMenu: openFeedbacks: ", openFeedbacks);
+  // console.log("renderMenu: openProfile: ", openProfile);
   const renderMenu = () => {
-    console.log("renderMenu: openFeedbacks: ", openFeedbacks);
-    console.log("renderMenu: openProfile: ", openProfile);
-    console.log("feedbacks: ");
+    // console.log("renderMenu: openFeedbacks: ", openFeedbacks);
+    // console.log("renderMenu: openProfile: ", openProfile);
+    // console.log("feedbacks: ");
 
     let feedbackItems = feedbacks.map((item, index) => (
       {
