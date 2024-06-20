@@ -2,8 +2,14 @@ import { Authenticator, Heading } from "@aws-amplify/ui-react";
 // import router, { useRouter } from 'next/router'
 import { signOut, fetchAuthSession, AuthSession } from "aws-amplify/auth";
 import React, { useEffect, useState } from "react";
-import { setLayout } from "../../context";
+import { setLayout, useSoftUIController } from "../../context";
 import { restget } from "../../restcalls";
+import { useLocation } from "react-router-dom";
+import DashboardNavbar from "../../components/DashboardNavbar";
+import DashboardLayout from "../../components/LayoutContainers/DashboardLayout";
+import SoftBox from "../../components/SoftBox";
+import SoftTypography from "../../components/SoftTypography";
+import { Icon } from "@mui/material";
 
 export function UserProfile1(user) {
 
@@ -11,21 +17,26 @@ export function UserProfile1(user) {
 
   const [authorized, setAuthorized] = useState(false);
 
-
+  const [controller, dispatch] = useSoftUIController();
+  const { pathname } = useLocation();
   useEffect(() => {
+    setLayout(dispatch, "error");
+  }, [pathname]);
 
-    restget("/api/authorize")
-      .then((response) => {
-        console.log(response);
-        setAuthorized(true);
-        window.location.href = "/dashboard";
-      })
-      .catch((err) => {
-        console.log(err);
-        setAuthorized(false);
-        window.location.href = "/auth";
-      });
-  }, []);
+  // useEffect(() => {
+  //
+  //   restget("/api/authorize")
+  //     .then((response) => {
+  //       console.log(response);
+  //       setAuthorized(true);
+  //       window.location.href = "/dashboard";
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //       setAuthorized(false);
+  //       window.location.href = "/auth";
+  //     });
+  // }, []);
 
   // If the plugin is installed but not signed-in yet, then signout from Amplify page.
   // purple_shield_plugin = True and trinity_plugin_user not found with user details,
@@ -77,13 +88,21 @@ export function UserProfile1(user) {
     }
   }
 
+  return (
+    <DashboardLayout>
+      <DashboardNavbar notifCount={0} />
+      <SoftBox flexDirection="column"  p={10}>
+        <SoftBox flexDirection="row" display="flex" alignItems="center">
+        <Icon color={"error"}>error</Icon>
+          <SoftTypography color={"text"}>Server Unreachable.</SoftTypography>
+        </SoftBox>
 
-  return <div>
 
-    <button className={"logoutbutton"} onClick={handleSignOut}>
-      Sign Out
-    </button>
-    {authorized && (<div>You are unauthorized!</div>)}
+        <SoftTypography variant="caption" color={"text"}>Please refresh the page or try again later. If the problem persists, contact support.</SoftTypography>
 
-  </div>;
+      </SoftBox>
+    </DashboardLayout>
+  );
+
+
 }

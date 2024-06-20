@@ -38,15 +38,16 @@ export async function restget(endpoint) {
   return fetch(url, body)
     .then((response) => {
       console.log(response);
+      console.log(response.status);
       if (response.status !== 200) {
         return { "error": response.status, "message": response.statusText };
       }
       return response.json();
     })
-    .catch((err) => {
-      console.log(err);
-      return err;
-    });
+    // .catch((err) => {
+    //   console.log(err);
+    //   return err;
+    // });
 
 }
 

@@ -112,14 +112,14 @@ function FeedbackSideBar() {
         .then((response) => {
           console.log("FEEDBACK: ", response);
           if (response.hasOwnProperty("error")) {
-            window.location.href = "/login";
+            // window.location.href = "/login";
           } else {
             setFeedbacks(response["feedbacks"]);
           }
         })
         .catch((err) => {
           console.log(err);
-          window.location.href = "/auth";
+          // window.location.href = "/";
         });
     }
 

@@ -52,8 +52,6 @@ export function Authorization(user) {
       <SoftTypography variant="body1" color="black" fontWeightBold verticalAlign>
         You are unauthorized!!!
       </SoftTypography>
-      <SoftButton href={"/login"}>Login Again</SoftButton>
-      <SoftButton onClick={handleSignOut} >Signout</SoftButton>
     </SoftBox>
     <a title={"Login again"} href={"/login"}/>
 

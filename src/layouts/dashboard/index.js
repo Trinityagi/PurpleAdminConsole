@@ -111,7 +111,7 @@ function Dashboard() {
       .then((response) => {
         console.log(response);
         if(response.hasOwnProperty("error")) {
-          window.location.href = "/auth";
+          window.location.href = "/error";
         }
         else{
           setCardsData(response['dashboard_data']);
@@ -122,7 +122,7 @@ function Dashboard() {
       })
       .catch((err) => {
         console.log(err);
-        window.location.href = "/auth";
+        window.location.href = "/error";
       });
   }, [])
   
@@ -168,7 +168,7 @@ function Dashboard() {
               <MiniStatisticsCard
                 title={{ text: "P95 Latency" }}
                 count={cardsData["p95_latency"] + "s"}
-                percentage={{ color: "error", text: cardsData["p95_latency_delta"]? cardsData["p95_latency_delta"]:"0" + "%"}}
+                percentage={{ color: "error", text: cardsData["p95_latency_delta"]? cardsData["p95_latency_delta"] + "%":"0" + "%"}}
                 icon={latency_icon}
               />
             </Grid>

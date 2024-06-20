@@ -149,6 +149,9 @@ function App() {
   ) : (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      {layout === "error" && (
+        <div></div>
+      )}
       {layout === "dashboard" && (
         <>
           <Sidenav

@@ -59,25 +59,16 @@ import CreditCard from "examples/Icons/CreditCard";
 import Cube from "examples/Icons/Cube";
 
 import {Dashboard as DashboardIcon, Groups, Timeline, Policy, Preview} from "@mui/icons-material"
+import { UserProfile1 } from "./layouts/authentication/userprofile1";
 
 const routes = [
+
   {
     type: "collapse",
-    name: "Sign-In",
-    key: "signin",
-    route: "/login",
-    icon: <DashboardIcon size="12px" />,
-    component: <CognitoSignIn />,
-    noCollapse: true,
-    sidebar: false
-  },
-  {
-    type: "collapse",
-    name: "Authorization",
-    key: "auth",
-    route: "/auth",
-    icon: <Shop size="12px" />,
-    component: <Authorization />,
+    name: "Error Page",
+    key: "error",
+    route: "/error",
+    component: <UserProfile1 />,
     noCollapse: true,
     sidebar: false
   },
