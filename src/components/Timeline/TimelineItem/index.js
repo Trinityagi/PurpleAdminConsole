@@ -25,10 +25,10 @@ import SoftTypography from "components/SoftTypography";
 import SoftBadge from "components/SoftBadge";
 
 // Timeline context
-import { useTimeline } from "examples/Timeline/context";
+import { useTimeline } from "components/Timeline/context";
 
 // Custom styles for the TimelineItem
-import { timelineItem, timelineItemIcon } from "examples/Timeline/TimelineItem/styles";
+import { timelineItem, timelineItemIcon } from "components/Timeline/TimelineItem/styles";
 
 function TimelineItem({ color, icon, title, dateTime, description, badges, lastItem }) {
   const isDark = useTimeline();

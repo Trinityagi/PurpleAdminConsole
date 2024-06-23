@@ -28,21 +28,23 @@ import SoftBox from "components/SoftBox";
 import SoftTypography from "components/SoftTypography";
 import SoftAvatar from "components/SoftAvatar";
 
-function DefaultBlogCard({ image, category, title, description, author, action }) {
+function DefaultBlogCard({ image, category, title, description, action, onClick }) {
+
+  function onClickHandler() {
+    onClick(title, description);
+  }
+
   return (
-    <Card>
-      <SoftBox mt={2} mx={2}>
-        {action.type === "internal" ? (
-          <Link to={action.route}>
-            <SoftBox component="img" src={image} alt={title} width="100%" borderRadius="lg" />
-          </Link>
-        ) : (
-          <MuiLink href={action.route} target="_blank" rel="noreferrer">
-            <SoftBox component="img" src={image} alt={title} width="100%" borderRadius="lg" />
-          </MuiLink>
-        )}
-      </SoftBox>
-      <SoftBox pb={3} px={3}>
+    <div onClick={onClickHandler}>
+    <Card       sx={{
+      display: "flex",
+      flexDirection: "column",
+      backgroundColor: "transparent",
+      boxShadow: "",
+      overflow: "visible",
+    }}>
+
+      <SoftBox  pb={3} px={3}>
         {category && (
           <SoftTypography
             variant="caption"
@@ -80,23 +82,11 @@ function DefaultBlogCard({ image, category, title, description, author, action }
           )}
         </SoftBox>
         <SoftTypography variant="body2" component="p" color="text">
-          {description}
+          {description.substr(0, 80) + "..."}
         </SoftTypography>
-        {author && (
-          <SoftBox display="flex" alignItems="center" mt={3}>
-            <SoftAvatar variant="rounded" src={author.image} alt={author.name} shadow="md" />
-            <SoftBox pl={2} lineHeight={0}>
-              <SoftTypography component="h6" variant="button" fontWeight="medium" gutterBottom>
-                {author.name}
-              </SoftTypography>
-              <SoftTypography variant="caption" color="text">
-                {author.date}
-              </SoftTypography>
-            </SoftBox>
-          </SoftBox>
-        )}
       </SoftBox>
     </Card>
+    </div>
   );
 }
 
@@ -134,6 +124,7 @@ DefaultBlogCard.propTypes = {
     }),
     PropTypes.bool,
   ]),
+  onClick: PropTypes.func,
   action: PropTypes.shape({
     type: PropTypes.oneOf(["external", "internal"]).isRequired,
     route: PropTypes.string.isRequired,

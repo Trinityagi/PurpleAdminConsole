@@ -40,9 +40,7 @@ const select = {
       overflow: "unset",
     },
 
-    icon: {
-      display: "none",
-    },
+
   },
 };
 

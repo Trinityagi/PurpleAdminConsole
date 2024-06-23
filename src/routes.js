@@ -60,6 +60,7 @@ import Cube from "examples/Icons/Cube";
 
 import {Dashboard as DashboardIcon, Groups, Timeline, Policy, Preview} from "@mui/icons-material"
 import { UserProfile1 } from "./layouts/authentication/userprofile1";
+import Playground from "./layouts/playground";
 
 const routes = [
 
@@ -85,8 +86,8 @@ const routes = [
   {
     type: "collapse",
     name: "Policy",
-    key: "tables",
-    route: "/tables",
+    key: "policies",
+    route: "/policies",
     icon: <Policy size="12px" />,
     component: <Tables />,
     noCollapse: true,
@@ -105,10 +106,10 @@ const routes = [
   {
     type: "collapse",
     name: "Playground",
-    key: "rtl",
-    route: "/rtl",
+    key: "playground",
+    route: "/playground",
     icon: <Preview size="12px" />,
-    component: <RTL />,
+    component: <Playground />,
     noCollapse: true,
     sidebar: true
   },

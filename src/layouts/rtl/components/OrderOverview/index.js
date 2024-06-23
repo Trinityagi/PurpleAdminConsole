@@ -22,7 +22,7 @@ import SoftBox from "components/SoftBox";
 import SoftTypography from "components/SoftTypography";
 
 // Soft UI Dashboard React examples
-import TimelineItem from "examples/Timeline/TimelineItem";
+import TimelineItem from "components/Timeline/TimelineItem";
 
 function OrdersOverview() {
   return (

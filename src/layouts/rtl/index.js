@@ -109,7 +109,7 @@ function RTL() {
                   </SoftBox>
                 }
                 height="20.25rem"
-                chart={gradientLineChartData}
+                chart={examples}
               />
             </Grid>
           </Grid> */}
