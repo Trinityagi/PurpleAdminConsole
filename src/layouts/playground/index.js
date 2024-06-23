@@ -232,7 +232,7 @@ function Playground() {
             {example_cards}
           </Grid>
         </SoftBox>
-        <SoftButton color="button">Run</SoftButton>
+        <SoftButton color="primary"><Icon sx={{ fontWeight: "bold" }}>send</Icon>&nbsp;&nbsp;Run</SoftButton>
       </SoftBox>
       <Footer />
     </DashboardLayout>

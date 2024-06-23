@@ -37,7 +37,7 @@ Coded by www.creative-tim.com
 
 // Soft UI Dashboard React layouts
 import Dashboard from "layouts/dashboard";
-import Tables from "layouts/tables";
+import Tables from "layouts/policies";
 import Billing from "layouts/billing";
 import RTL from "layouts/rtl";
 import Profile from "layouts/profile";
