@@ -52,6 +52,7 @@ function DefaultBlogCard({ image, category, title, description, action, onClick 
             textTransform="uppercase"
             fontWeight="medium"
             textGradient
+
           >
             {category.label}
           </SoftTypography>
@@ -72,7 +73,7 @@ function DefaultBlogCard({ image, category, title, description, action, onClick 
             <MuiLink href={action.route} target="_blank" rel="noreferrer">
               <SoftTypography
                 display="inline"
-                variant="h5"
+                variant="caption"
                 textTransform="capitalize"
                 className="color-background"
               >
@@ -81,7 +82,7 @@ function DefaultBlogCard({ image, category, title, description, action, onClick 
             </MuiLink>
           )}
         </SoftBox>
-        <SoftTypography variant="body2" component="p" color="text">
+        <SoftTypography variant="caption" component={"p"} color="text">
           {description.substr(0, 80) + "..."}
         </SoftTypography>
       </SoftBox>
