@@ -47,14 +47,14 @@ const policiesData = {
       ),
       endpoints: (
         <SoftBox >
-        <SoftBadge variant="gradient" badgeContent="OpenAI" color="warning" size="xs"  />
-        <SoftBadge variant="gradient" badgeContent="Claude" color="text" size="xs"  />
+        <SoftBadge variant="gradient" badgeContent="OpenAI" size="xs"  />
+        <SoftBadge variant="gradient" badgeContent="Claude" size="xs"  />
         </SoftBox>
       ),
       usergroup: (
         <SoftBox >
-          <SoftBadge variant="gradient" badgeContent="HR Group" color="white" size="xs"  />
-          <SoftBadge variant="gradient" badgeContent="Test" color="white" size="xs"  />
+          <SoftBadge variant="gradient" badgeContent="HR Group" size="xs"  />
+          <SoftBadge variant="gradient" badgeContent="Test" size="xs"  />
         </SoftBox>
       ),
       action,
@@ -73,7 +73,7 @@ const policiesData = {
       ),
       usergroup: (
         <SoftBox >
-          <SoftBadge variant="gradient" badgeContent="All" color="white" size="xs"  />
+          <SoftBadge variant="gradient" badgeContent="All" size="xs"  />
         </SoftBox>
       ),
       action,
@@ -93,7 +93,7 @@ const policiesData = {
       ),
       usergroup: (
         <SoftBox >
-          <SoftBadge variant="gradient" badgeContent="All" color="white" size="xs"  />
+          <SoftBadge variant="gradient" badgeContent="All" size="xs"  />
         </SoftBox>
       ),
       action,

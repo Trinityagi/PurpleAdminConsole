@@ -61,17 +61,17 @@ function TimelineItem({ color, icon, title, dateTime, description, badges, lastI
         <Icon sx={(theme) => timelineItemIcon(theme, { color })}>{icon}</Icon>
       </SoftBox>
       <SoftBox ml={5.75} pt={description ? 0.7 : 0.5} lineHeight={0} maxWidth="30rem">
-        <SoftTypography variant="button" fontWeight="medium" color={isDark ? "white" : "dark"}>
-          {title}
-        </SoftTypography>
+        {/*<SoftTypography variant="button" fontWeight="medium" color={isDark ? "white" : "dark"}>*/}
+        {/*  {title}*/}
+        {/*</SoftTypography>*/}
         <SoftBox mt={0.5}>
-          <SoftTypography
-            variant="caption"
-            fontWeight="medium"
-            color={isDark ? "secondary" : "text"}
-          >
-            {dateTime}
-          </SoftTypography>
+          {/*<SoftTypography*/}
+          {/*  variant="caption"*/}
+          {/*  fontWeight="medium"*/}
+          {/*  color={isDark ? "secondary" : "text"}*/}
+          {/*>*/}
+          {/*  {dateTime}*/}
+          {/*</SoftTypography>*/}
         </SoftBox>
         <SoftBox mt={2} mb={1.5}>
           {description ? (
@@ -111,8 +111,8 @@ TimelineItem.propTypes = {
     "light",
   ]),
   icon: PropTypes.node.isRequired,
-  title: PropTypes.string.isRequired,
-  dateTime: PropTypes.string.isRequired,
+  title: PropTypes.string,
+  dateTime: PropTypes.string,
   description: PropTypes.string,
   badges: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
   lastItem: PropTypes.bool,

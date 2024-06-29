@@ -58,19 +58,7 @@ function DefaultBlogCard({ image, category, title, description, action, onClick 
           </SoftTypography>
         )}
         <SoftBox display="block" mt={0.5} mb={1}>
-          {action.type === "internal" ? (
-            <Link to={action.route}>
-              <SoftTypography
-                display="inline"
-                variant="h5"
-                textTransform="capitalize"
-                className="color-background"
-              >
-                {title}
-              </SoftTypography>
-            </Link>
-          ) : (
-            <MuiLink href={action.route} target="_blank" rel="noreferrer">
+
               <SoftTypography
                 display="inline"
                 variant="caption"
@@ -79,8 +67,7 @@ function DefaultBlogCard({ image, category, title, description, action, onClick 
               >
                 {title}
               </SoftTypography>
-            </MuiLink>
-          )}
+
         </SoftBox>
         <SoftTypography variant="caption" component={"p"} color="text">
           {description.substr(0, 80) + "..."}
@@ -99,7 +86,7 @@ DefaultBlogCard.defaultProps = {
 
 // Typechecking props for the DefaultBlogCard
 DefaultBlogCard.propTypes = {
-  image: PropTypes.string.isRequired,
+  image: PropTypes.string,
   category: PropTypes.oneOfType([
     PropTypes.shape({
       color: PropTypes.oneOf([
@@ -117,19 +104,11 @@ DefaultBlogCard.propTypes = {
   ]),
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
-  author: PropTypes.oneOfType([
-    PropTypes.shape({
-      image: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      date: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
-    }),
-    PropTypes.bool,
-  ]),
   onClick: PropTypes.func,
   action: PropTypes.shape({
     type: PropTypes.oneOf(["external", "internal"]).isRequired,
     route: PropTypes.string.isRequired,
-  }).isRequired,
+  }),
 };
 
 export default DefaultBlogCard;

@@ -51,10 +51,10 @@ export async function restget(endpoint) {
 
 }
 
-export async function restpost(endpoint, query) {
+export async function restpost(endpoint, payload) {
   let user_details = { "trinity_plugin_user": "" };
 
-  console.log("Make rest POST: ", query);
+  console.log("Make rest POST: ", payload);
   const url = BACKEND_HOST + endpoint;
 
   let token = "";
@@ -67,13 +67,6 @@ export async function restpost(endpoint, query) {
   } catch (err) {
     return { "error": 401, "message": "Please log in to proceed." };
   }
-
-  let payload = {
-    text: query,
-    llm_endpoint: "",
-    safety_model: "openchat",
-    settings: {},
-  };
 
   const body = {
     method: "POST",

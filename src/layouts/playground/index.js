@@ -1,6 +1,14 @@
 // @mui material components
 import Grid from "@mui/material/Grid";
 import Icon from "@mui/material/Icon";
+import CloseIcon from '@mui/icons-material/Close';
+import { styled } from '@mui/material/styles';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import Tooltip from '@mui/material/Tooltip';
+import Select from '@mui/material/Select';
 
 // Soft UI Playground React components
 import { useEffect, useState } from "react";
@@ -11,27 +19,14 @@ import SoftTypography from "components/SoftTypography";
 import DashboardLayout from "components/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "components/DashboardNavbar";
 import Footer from "components/Footer";
-import MiniStatisticsCard from "components/StatisticsCards/MiniStatisticsCard";
-import HorizontalBarChart from "examples/Charts/BarCharts/HorizontalBarChart";
-import GradientLineChart from "components/GradientLineChart";
-import ReactSpeedometer from "react-d3-speedometer";
-import Table from "examples/Tables/Table";
-import SoftMenuItem from "components/SoftMenuItem";
 
 // Soft UI Playground React base styles
 import typography from "assets/theme/base/typography";
-
-import users_icon from "../../assets/images/users.svg";
-import latency_icon from "../../assets/images/latency.svg";
-import protection_icon from "../../assets/images/protected entities.svg";
-import utilization_icon from "../../assets/images/utilization.svg";
-import test_icon from "../../assets/images/trinity_agi_logo.svg";
 
 import { restget, restpost } from "../../restcalls";
 import TimelineList from "components/Timeline/TimelineList";
 import TimelineItem from "components/Timeline/TimelineItem";
 import SoftInput from "../../components/SoftInput";
-import { Chip, InputLabel, OutlinedInput, Select } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import Box from "@mui/material/Box";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
@@ -39,6 +34,17 @@ import SoftButton from "../../components/SoftButton";
 import DefaultBlogCard from "../../components/DefaultBlogCard";
 
 import examples from "./data/examples";
+import IconButton from "@mui/material/IconButton";
+import { CheckBox } from "@mui/icons-material";
+
+const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+  '& .MuiDialogContent-root': {
+    padding: theme.spacing(2),
+  },
+  '& .MuiDialogActions-root': {
+    padding: theme.spacing(1),
+  },
+}));
 
 function Playground() {
   const { size } = typography;
@@ -52,19 +58,204 @@ function Playground() {
   });
   const [chartDataset, setChartDataset] = useState([0, 0, 0]);
   const [queryCounts, setQueryCounts] = useState([]);
-  const [personName, setPersonName] = useState([]);
+  const [compareModel, setCompareModel] = useState("presidio");
   const [prompt, setPrompt] = useState("");
+  const [open, setOpen] = useState(false);
+
+  const [convCount1, setConvCount1] = useState(0);
+  const [convCount2, setConvCount2] = useState(0);
+  const [conversations1, setConversations1] = useState([]);
+  const [conversations2, setConversations2] = useState([]);
+  const [timeline1, setTimeline1] = useState("");
+  const [timeline2, setTimeline2] = useState("");
+
+  function addConvItem(view, query, query_d, out_text, out_text_d) {
+    console.log("query_d: ", query_d);
+    console.log("out_text_d: ", out_text_d);
+
+    if (view === 1) {
+      conversations1.push({ query: query, query_d: query_d, out_text: out_text, out_text_d: out_text_d });
+      console.log(conversations1);
+      setConversations1(conversations1);
+      setConvCount1(convCount1 + 1);
+    } else if (view === 2) {
+      conversations2.push({ query: query, query_d: query_d, out_text: out_text, out_text_d: out_text_d });
+      console.log(conversations2);
+      setConversations2(conversations2);
+      setConvCount2(convCount2 + 1);
+    }
+  }
+
+  function clearContents() {
+    console.log("on clearContents");
+    setTimeline1("");
+    setConversations1([]);
+    setTimeline2("");
+    setConversations2([]);
+    setPrompt("");
+    setConvCount1(0);
+    setConvCount2(0);
+    console.log("on clearContents end");
+
+  }
 
   function onExamplesCard(title, description) {
     setPrompt(description);
   }
 
   function runQuery() {
-    restpost("/api/query", prompt).then((response) => {
+
+    console.log(compareModel);
+
+    let payload1 = {
+      text: prompt,
+      policy: "Protect Personal Information, Protect Business Information, Protect Intellectual Property",
+      safety_model: "openchat",
+      settings: {},
+    };
+
+    restpost("/api/query", payload1).then((response) => {
       console.log(response);
-      console.log(response.json);
+      if (!response.hasOwnProperty("error")) {
+        addConvItem(1, prompt, response["result"]["query_d"], response["result"]["out_text"], response["result"]["out_text_d"]);
+      }
+
+    });
+
+    let payload2 = {
+      text: prompt,
+      policy: "Protect Personal Information, Protect Business Information, Protect Intellectual Property",
+      safety_model: compareModel,
+      settings: {},
+    };
+    restpost("/api/query", payload2).then((response) => {
+      console.log(response);
+      if (!response.hasOwnProperty("error")) {
+        addConvItem(2, prompt, response["result"]["query_d"], response["result"]["out_text"], response["result"]["out_text_d"]);
+      }
     });
   }
+
+  useEffect(() => {
+    console.log("Timeline updation started");
+
+    let conversations1_rev = conversations1.reverse()
+
+    const timeline = conversations1_rev.map((item, index) => (
+      <div key={index}>
+        <TimelineItem
+          color="success"
+          description={item.query_d}
+          icon="person"
+        />
+        <TimelineItem
+          color="error"
+          icon="cloud"
+          description={item.out_text_d}
+          badges={["Data Utility Loss: 0", "Masked: 6"]}
+        />
+      </div>
+    ));
+
+    setTimeline1(timeline);
+
+  }, [convCount1]);
+
+  useEffect(() => {
+    console.log("Timeline updation started for view 2");
+
+    let conversations2_rev = conversations2.reverse();
+    const timeline = conversations2_rev.map((item, index) => (
+      <div key={index}>
+        <TimelineItem
+          color="success"
+          description={item.query_d}
+          icon="person"
+        />
+        <TimelineItem
+          color="error"
+          icon="cloud"
+          description={item.out_text_d}
+          badges={["Data Utility Loss: 0", "Masked: 6"]}
+        />
+      </div>
+    ));
+
+    setTimeline2(timeline);
+
+  }, [convCount2]);
+
+
+  const handleClickOpen = () => {
+    console.log("handleClickOpen");
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleSave = () => {
+    setOpen(false);
+  };
+
+  function settingsDialog() {
+    return (
+      <BootstrapDialog
+      onClose={handleClose}
+      aria-labelledby="customized-dialog-title"
+      open={open}
+    >
+      <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+        Playground Settings
+      </DialogTitle>
+      <IconButton
+        aria-label="close"
+        onClick={handleClose}
+        sx={{
+          position: 'absolute',
+          right: 8,
+          top: 8,
+          color: (theme) => theme.palette.grey[500],
+        }}
+      >
+        <CloseIcon />
+      </IconButton>
+      <DialogContent dividers >
+        <Grid container spacing={3} padding={"1rem"} >
+          <Grid items padding={"1rem"} >
+            <SoftTypography variant={"body2"}>
+              Customize the playground.
+            </SoftTypography>
+          </Grid>
+          <Grid items xs={8} padding={"1rem"} >
+            <SoftTypography variant={"h5"}>Policies</SoftTypography>
+            <SoftBox display={"flex"} justifyContent="space-between" >
+            <SoftTypography variant={"body2"} >Protect Personal Information</SoftTypography>
+            <CheckBox></CheckBox>
+            </SoftBox>
+            <SoftBox display={"flex"} justifyContent="space-between" >
+            <SoftTypography variant={"body2"} >Protect Business Information</SoftTypography>
+            <CheckBox></CheckBox>
+            </SoftBox>
+            <SoftBox display={"flex"} justifyContent="space-between" >
+            <SoftTypography variant={"body2"} >Protect Intellectual Property</SoftTypography>
+            <CheckBox></CheckBox>
+            </SoftBox>
+          </Grid>
+        </Grid>
+
+      </DialogContent>
+      <DialogActions>
+        <SoftButton autoFocus onClick={handleSave}>
+          Save changes
+        </SoftButton>
+      </DialogActions>
+    </BootstrapDialog>);
+  }
+
+  let settingsDialogItem = settingsDialog()
+
 
   const example_cards = examples.map((item, index) => {
     return (<Grid key={index} item xs={10} lg={2} sm={6} md={6}>
@@ -178,15 +369,16 @@ function Playground() {
     },
   ];
 
-  const names = [
-    "GPT4",
-    "GPT3",
-    "llama13b",
-    "llama70b",
-    "Presidio",
-    "Claude",
-    "Mixtral",
-  ];
+  const compare_models = {
+    "gpt4": "GPT4",
+    "gpt3": "GPT3",
+    "llama13b": "Llama13b",
+    "llama70b": "Llama70b",
+    "presidio": "Presidio",
+    "claude": "Claude",
+    "mixtral": "Mixtral",
+  };
+
   const ITEM_HEIGHT = 100;
   const ITEM_PADDING_TOP = 8;
   const MenuProps = {
@@ -203,64 +395,68 @@ function Playground() {
   return (
     <DashboardLayout>
       <DashboardNavbar notifCount={cardsData["feedbacks_count"]} />
-
+      {settingsDialogItem}
           <Grid container spacing={3}>
+            <Grid item xs={9} xl={9} >
+              <SoftInput placeholder="Type here..." value={prompt} multiline rows={3} onChange={(event) => {
+                setPrompt(event.target.value);
+              }} />
+            </Grid>
+            <Grid item xs={2} justifyItems={"flex-end"} >
+              <SoftButton color="primary" onClick={runQuery}><Icon
+                sx={{ fontWeight: "bold" }}>send</Icon>&nbsp;&nbsp;Run</SoftButton>
+            </Grid>
             <Grid item xs={10} >
               <Grid container spacing={3}>
-                <Grid xs={3} sm={3} item>
+                <Grid xs={3} sm={3} item >
                 <SoftTypography id="compare-label" variant={"button"}>Compare with:</SoftTypography>
-                <Select
-                  labelId="compare-label"
-                  id="compare"
-                  value={"GPT3"}
-                  label="Compare"
-                  onChange={() => {
-                  }}
+                  <Select
+                    labelId="compare-label"
+                    id="compare"
+                    value={compareModel}
+                    label="Compare"
+                    onChange={(event) => {
+                      console.log(event);
+                      setCompareModel(event.target.value);
+                    }}
+                  >
+                    {Object.keys(compare_models).map((item, index) => (
+                      <MenuItem key={index} value={item}>{compare_models[item]}</MenuItem>))}
+                  </Select>
+                </Grid>
+                <Grid xs={1} sm={1} item
+                      direction="column"
+                      align="left"
+                      style={{ display: "flex", justifyContent: "flex-end" }}
                 >
-                  <MenuItem value={"GPT4"}>GPT4</MenuItem>
-                  <MenuItem value={"GPT3"}>GPT3</MenuItem>
-                  <MenuItem value={"llama13b"}>LLama 13b</MenuItem>
-                  <MenuItem value={"llama70b"}>LLama 70b</MenuItem>
-                  <MenuItem value={"Presidio"}>Presidio</MenuItem>
-                  <MenuItem value={"Claude"}>Claude</MenuItem>
-                  <MenuItem value={"Mixtral"}>Mixtral</MenuItem>
-                </Select>
+                  <Tooltip key={"clearchat"} title={"Settings"} placement="top">
+                    <SoftButton iconOnly display="flex" position="baseline" variant={"contained"}  onClick={handleClickOpen}><Icon>settings</Icon></SoftButton>
+                  </Tooltip>
+                </Grid>
+                <Grid xs={1} sm={1} item
+                      direction="column"
+                      align="left"
+                      style={{ display: "flex", justifyContent: "flex-end" }}
+                >
+                  <Tooltip key={"clearchat"} title={"Clear chat"} placement="top">
+                    <SoftButton iconOnly display="flex" position="baseline" variant={"contained"}  onClick={clearContents}><Icon>delete</Icon></SoftButton>
+                  </Tooltip>
                 </Grid>
               </Grid>
-              <SoftBox></SoftBox>
+
             </Grid>
 
             <Grid item xs={5} sm={5} >
               <SoftBox rows={15}>
                 <TimelineList title="Purple Model">
-                  <TimelineItem
-                    color="success"
-                    icon="person"
-                    description="People care about how you see the world, how you think, what motivates you, what you’re struggling with or afraid of."
-                  />
-                  <TimelineItem
-                    color="error"
-                    icon="cloud"
-                    description="People care about how you see the world, how you think, what motivates you, what you’re struggling with or afraid of."
-                    badges={["Data Utility Loss: 0", "Masked: 6"]}
-                  />
+                  {timeline1}
                 </TimelineList>
               </SoftBox>
             </Grid>
             <Grid item xs={5}  sm={5} >
               <SoftBox rows={15}>
-                <TimelineList title="GPT3">
-                  <TimelineItem
-                    color="success"
-                    icon="person"
-                    description="People care about how you see the world, how you think, what motivates you, what you’re struggling with or afraid of."
-                  />
-                  <TimelineItem
-                    color="warning"
-                    icon="cloud"
-                    description="People care about how you see the world, how you think, what motivates you, what you’re struggling with or afraid of."
-                    badges={["Data Utility Loss: 50", "Masked: 9"]}
-                  />
+                <TimelineList title={compare_models[compareModel]}>
+                  {timeline2}
                 </TimelineList>
               </SoftBox>
             </Grid>
@@ -269,13 +465,7 @@ function Playground() {
               {example_cards}
               </Grid>
             </Grid>
-            <Grid item xs={9} xl={9} >
-              <SoftInput placeholder="Type here..." value={prompt} multiline rows={3} />
-            </Grid>
-            <Grid item xs={2} justifyItems={"flex-end"} >
-              <SoftButton color="primary" onClick={runQuery}><Icon
-                sx={{ fontWeight: "bold" }}>send</Icon>&nbsp;&nbsp;Run</SoftButton>
-            </Grid>
+
           </Grid>
 
       <Footer />

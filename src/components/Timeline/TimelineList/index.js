@@ -31,7 +31,7 @@ function TimelineList({ title, dark, children }) {
     <TimelineProvider value={dark}>
       <Card>
         <SoftBox bgColor={dark ? "dark" : "white"} variant="gradient">
-          <SoftBox pt={3} px={3}>
+          <SoftBox pt={1} px={3}>
             <SoftTypography variant="h6" fontWeight="medium" color={dark ? "white" : "dark"}>
               {title}
             </SoftTypography>
@@ -50,9 +50,9 @@ TimelineList.defaultProps = {
 
 // Typechecking props for the TimelineList
 TimelineList.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   dark: PropTypes.bool,
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
 };
 
 export default TimelineList;
