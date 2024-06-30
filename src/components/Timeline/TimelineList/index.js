@@ -29,14 +29,20 @@ import { TimelineProvider } from "components/Timeline/context";
 function TimelineList({ title, dark, children }) {
   return (
     <TimelineProvider value={dark}>
-      <Card>
-        <SoftBox bgColor={dark ? "dark" : "white"} variant="gradient">
+      <Card sx={{
+        display: "flex",
+        flexDirection: "column",
+        overflow: "auto",
+        overflowY: "auto",
+        // justifyContent="flex-end" # DO NOT USE THIS WITH 'scroll'
+      }}>
+        <SoftBox height="350px" bgColor={dark ? "dark" : "white"} variant="gradient" >
           <SoftBox pt={1} px={3}>
             <SoftTypography variant="h6" fontWeight="medium" color={dark ? "white" : "dark"}>
               {title}
             </SoftTypography>
           </SoftBox>
-          <SoftBox p={2}>{children}</SoftBox>
+          <SoftBox p={2} >{children}</SoftBox>
         </SoftBox>
       </Card>
     </TimelineProvider>
