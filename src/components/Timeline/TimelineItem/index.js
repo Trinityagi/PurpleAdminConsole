@@ -29,8 +29,9 @@ import { useTimeline } from "components/Timeline/context";
 
 // Custom styles for the TimelineItem
 import { timelineItem, timelineItemIcon } from "components/Timeline/TimelineItem/styles";
+import { CircularProgress, LinearProgress, Skeleton } from "@mui/material";
 
-function TimelineItem({ color, icon, title, dateTime, description, badges, lastItem }) {
+function TimelineItem({ color, icon, title, dateTime, waiting, description, badges, lastItem }) {
   const isDark = useTimeline();
 
   const renderBadges =
@@ -74,12 +75,16 @@ function TimelineItem({ color, icon, title, dateTime, description, badges, lastI
           {/*</SoftTypography>*/}
         </SoftBox>
         <SoftBox mt={2} mb={1.5}>
-          {description ? (
+          { !waiting  ? (
             <SoftTypography variant="button" fontWeight="regular" color="text">
               {description}
             </SoftTypography>
           ) : null}
         </SoftBox>
+
+        { waiting && (<SoftBox mt={2} mb={1.5} sx={{ width: "80%" }}>
+          <Skeleton variant="rounded" height={80}></Skeleton>
+        </SoftBox>)}
         {badges.length > 0 ? (
           <SoftBox display="flex" pb={lastItem ? 1 : 2}>
             {renderBadges}
@@ -96,6 +101,7 @@ TimelineItem.defaultProps = {
   badges: [],
   lastItem: false,
   description: "",
+  waiting: false
 };
 
 // Typechecking props for the TimelineItem
@@ -112,6 +118,7 @@ TimelineItem.propTypes = {
   ]),
   icon: PropTypes.node.isRequired,
   title: PropTypes.string,
+  waiting: PropTypes.bool,
   dateTime: PropTypes.string,
   description: PropTypes.string,
   badges: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),

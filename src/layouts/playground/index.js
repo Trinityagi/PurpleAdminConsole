@@ -69,20 +69,98 @@ function Playground() {
   const [timeline1, setTimeline1] = useState("");
   const [timeline2, setTimeline2] = useState("");
 
-  function addConvItem(view, query, query_d, out_text, out_text_d) {
+  function addConvItem(view, query, query_d, out_text, out_text_d, hasResponse=false) {
     console.log("query_d: ", query_d);
     console.log("out_text_d: ", out_text_d);
 
     if (view === 1) {
-      conversations1.push({ query: query, query_d: query_d, out_text: out_text, out_text_d: out_text_d });
-      console.log(conversations1);
+      if(hasResponse === false) {
+        console.log("adding 1");
+        let conversation = { query: query, query_d: query_d, out_text: out_text, out_text_d: out_text_d, has_response: false }
+        conversations1.push(conversation);
+      }
+      else {
+        console.log("updating 1");
+        conversations1.pop();
+        let conversation = { query: query, query_d: query_d, out_text: out_text, out_text_d: out_text_d, has_response: true }
+        conversations1.push(conversation);
+      }
+
+      console.log("Conversation1: ", conversations1);
       setConversations1(conversations1);
       setConvCount1(convCount1 + 1);
+      updateTimeline(1);
+
     } else if (view === 2) {
-      conversations2.push({ query: query, query_d: query_d, out_text: out_text, out_text_d: out_text_d });
-      console.log(conversations2);
+      if(!hasResponse) {
+        console.log("adding 2");
+        let conversation = { query: query, query_d: query_d, out_text: out_text, out_text_d: out_text_d, has_response: false }
+        conversations2.push(conversation);
+      }
+      else {
+        console.log("updating 2");
+        conversations2.pop();
+        let conversation = { query: query, query_d: query_d, out_text: out_text, out_text_d: out_text_d, has_response: true }
+        conversations2.push(conversation);
+      }
+      console.log("Conversation2: ", conversations2);
       setConversations2(conversations2);
       setConvCount2(convCount2 + 1);
+
+      updateTimeline(2);
+    }
+  }
+
+  function updateTimeline(view) {
+    /*
+    view 1 - for Purple Model conversation timeline
+    view 2 - for the compare model converation timeline
+
+     */
+
+    if(view === 1) {
+      let conversations1_rev = conversations1.toReversed()
+
+      const timeline = conversations1_rev.map((item, index) => (
+        <div key={index}>
+          <TimelineItem
+            color="success"
+            description={item.query_d}
+            icon="person"
+          />
+          <TimelineItem
+            color="error"
+            icon="cloud"
+            description={item.out_text_d}
+            waiting={!item.has_response}
+            badges={["Data Utility Loss: 0", "Masked: 6"]}
+          />
+        </div>
+      ));
+
+      setTimeline1(timeline);
+    }
+    else if (view === 2) {
+      let conversations2_rev = conversations2.toReversed()
+
+      const timeline = conversations2_rev.map((item, index) => (
+        <div key={index}>
+          <TimelineItem
+            color="success"
+            description={item.query_d}
+            icon="person"
+          />
+          <TimelineItem
+            color="error"
+            icon="cloud"
+            description={item.out_text_d}
+            waiting={!item.has_response}
+            badges={["Data Utility Loss: 0", "Masked: 6"]}
+          />
+        </div>
+      ));
+
+      setTimeline2(timeline);
     }
   }
 
@@ -108,6 +186,9 @@ function Playground() {
 
     console.log(compareModel);
 
+    addConvItem(1, prompt, prompt, "Working...", "Working...", false);
+    addConvItem(2, prompt, prompt, "Working...", "Working...", false);
+
     let payload1 = {
       text: prompt,
       policy: "Protect Personal Information, Protect Business Information, Protect Intellectual Property",
@@ -118,9 +199,11 @@ function Playground() {
     restpost("/api/query", payload1).then((response) => {
       console.log(response);
       if (!response.hasOwnProperty("error")) {
-        addConvItem(1, prompt, response["result"]["query_d"], response["result"]["out_text"], response["result"]["out_text_d"]);
+        addConvItem(1, prompt, response["result"]["query_d"], response["result"]["out_text"], response["result"]["out_text_d"], true);
       }
-
+      else {
+        addConvItem(1, prompt, prompt, "Error!", "Error!", true);
+      }
     });
 
     let payload2 = {
@@ -132,60 +215,13 @@ function Playground() {
     restpost("/api/query", payload2).then((response) => {
       console.log(response);
       if (!response.hasOwnProperty("error")) {
-        addConvItem(2, prompt, response["result"]["query_d"], response["result"]["out_text"], response["result"]["out_text_d"]);
+        addConvItem(2, prompt, response["result"]["query_d"], response["result"]["out_text"], response["result"]["out_text_d"], true);
+      }
+      else {
+        addConvItem(2, prompt, prompt, "Error!", "Error!", true);
       }
     });
   }
-
-  useEffect(() => {
-    console.log("Timeline updation started");
-
-    let conversations1_rev = conversations1.reverse()
-
-    const timeline = conversations1_rev.map((item, index) => (
-      <div key={index}>
-        <TimelineItem
-          color="success"
-          description={item.query_d}
-          icon="person"
-        />
-        <TimelineItem
-          color="error"
-          icon="cloud"
-          description={item.out_text_d}
-          badges={["Data Utility Loss: 0", "Masked: 6"]}
-        />
-      </div>
-    ));
-
-    setTimeline1(timeline);
-
-  }, [convCount1]);
-
-  useEffect(() => {
-    console.log("Timeline updation started for view 2");
-
-    let conversations2_rev = conversations2.reverse();
-    const timeline = conversations2_rev.map((item, index) => (
-      <div key={index}>
-        <TimelineItem
-          color="success"
-          description={item.query_d}
-          icon="person"
-        />
-        <TimelineItem
-          color="error"
-          icon="cloud"
-          description={item.out_text_d}
-          badges={["Data Utility Loss: 0", "Masked: 6"]}
-        />
-      </div>
-    ));
-
-    setTimeline2(timeline);
-
-  }, [convCount2]);
-
 
   const handleClickOpen = () => {
     console.log("handleClickOpen");
@@ -397,7 +433,7 @@ function Playground() {
     <DashboardLayout>
       <DashboardNavbar notifCount={cardsData["feedbacks_count"]} />
       {settingsDialogItem}
-          <Grid container spacing={3}>
+          <Grid container spacing={3} padding={6}>
             <Grid item xs={10} >
               <Grid container spacing={3}>
                 <Grid xs={3} sm={3} item >
@@ -445,11 +481,9 @@ function Playground() {
               <SoftButton color="primary" onClick={runQuery}><Icon
                 sx={{ fontWeight: "bold" }}>send</Icon>&nbsp;&nbsp;Run</SoftButton>
             </Grid>
-
-
-            <Grid item xs={5} sm={5} >
-              <SoftBox rows={15}>
-                <TimelineList title="Purple Model">
+            <Grid item xs={5} sm={5}>
+              <SoftBox sx={{ height: '100%' }} >
+                <TimelineList title="Purple Model" >
                   {timeline1}
                 </TimelineList>
               </SoftBox>
