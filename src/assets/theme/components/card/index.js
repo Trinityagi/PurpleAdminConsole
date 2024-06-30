@@ -21,7 +21,7 @@ import boxShadows from "assets/theme/base/boxShadows";
 // Soft UI Dashboard React Helper Function
 import rgba from "assets/theme/functions/rgba";
 
-const { black, white } = colors;
+const { black, white, grey } = colors;
 const { borderWidth, borderRadius } = borders;
 const { xxl } = boxShadows;
 
@@ -32,10 +32,9 @@ const card = {
       flexDirection: "column",
       position: "relative",
       minWidth: 0,
-      wordWrap: "break-word",
       backgroundColor: white.main,
       backgroundClip: "border-box",
-      border: `${borderWidth[0]} solid ${rgba(black.main, 0.125)}`,
+      border: `${borderWidth[1]} solid ${rgba(grey["700"], 0.125)}`,
       borderRadius: borderRadius.xl,
       boxShadow: xxl,
     },

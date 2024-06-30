@@ -100,6 +100,7 @@ function Playground() {
   }
 
   function onExamplesCard(title, description) {
+    console.log("onExamplesCard: ", description)
     setPrompt(description);
   }
 
@@ -397,19 +398,10 @@ function Playground() {
       <DashboardNavbar notifCount={cardsData["feedbacks_count"]} />
       {settingsDialogItem}
           <Grid container spacing={3}>
-            <Grid item xs={9} xl={9} >
-              <SoftInput placeholder="Type here..." value={prompt} multiline rows={3} onChange={(event) => {
-                setPrompt(event.target.value);
-              }} />
-            </Grid>
-            <Grid item xs={2} justifyItems={"flex-end"} >
-              <SoftButton color="primary" onClick={runQuery}><Icon
-                sx={{ fontWeight: "bold" }}>send</Icon>&nbsp;&nbsp;Run</SoftButton>
-            </Grid>
             <Grid item xs={10} >
               <Grid container spacing={3}>
                 <Grid xs={3} sm={3} item >
-                <SoftTypography id="compare-label" variant={"button"}>Compare with:</SoftTypography>
+                  <SoftTypography id="compare-label" variant={"button"}>Compare with:</SoftTypography>
                   <Select
                     labelId="compare-label"
                     id="compare"
@@ -443,8 +435,17 @@ function Playground() {
                   </Tooltip>
                 </Grid>
               </Grid>
-
             </Grid>
+            <Grid item xs={9} xl={9} >
+              <SoftInput placeholder="Type here..." value={prompt} multiline rows={3} onChange={(event) => {
+                setPrompt(event.target.value);
+              }} />
+            </Grid>
+            <Grid item xs={2} justifyItems={"flex-end"} >
+              <SoftButton color="primary" onClick={runQuery}><Icon
+                sx={{ fontWeight: "bold" }}>send</Icon>&nbsp;&nbsp;Run</SoftButton>
+            </Grid>
+
 
             <Grid item xs={5} sm={5} >
               <SoftBox rows={15}>

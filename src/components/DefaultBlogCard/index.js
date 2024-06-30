@@ -27,6 +27,7 @@ import MuiLink from "@mui/material/Link";
 import SoftBox from "components/SoftBox";
 import SoftTypography from "components/SoftTypography";
 import SoftAvatar from "components/SoftAvatar";
+import { CardContent, CardHeader } from "@mui/material";
 
 function DefaultBlogCard({ image, category, title, description, action, onClick }) {
 
@@ -36,43 +37,27 @@ function DefaultBlogCard({ image, category, title, description, action, onClick 
 
   return (
     <div onClick={onClickHandler}>
-    <Card       sx={{
+    <Card
+      variant="outlined"
+      sx={{
       display: "flex",
       flexDirection: "column",
       backgroundColor: "transparent",
-      boxShadow: "",
+
       overflow: "visible",
     }}>
 
-      <SoftBox  pb={3} px={3}>
-        {category && (
-          <SoftTypography
-            variant="caption"
-            color={category.color}
-            textTransform="uppercase"
-            fontWeight="medium"
-            textGradient
-
-          >
-            {category.label}
-          </SoftTypography>
-        )}
-        <SoftBox display="block" mt={0.5} mb={1}>
-
+      <CardContent >
               <SoftTypography
                 display="inline"
                 variant="caption"
                 textTransform="capitalize"
                 className="color-background"
+                fontWeight={"body2"}
               >
                 {title}
               </SoftTypography>
-
-        </SoftBox>
-        <SoftTypography variant="caption" component={"p"} color="text">
-          {description.substr(0, 80) + "..."}
-        </SoftTypography>
-      </SoftBox>
+      </CardContent>
     </Card>
     </div>
   );
@@ -103,7 +88,7 @@ DefaultBlogCard.propTypes = {
     PropTypes.bool,
   ]),
   title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
+  description: PropTypes.string,
   onClick: PropTypes.func,
   action: PropTypes.shape({
     type: PropTypes.oneOf(["external", "internal"]).isRequired,
