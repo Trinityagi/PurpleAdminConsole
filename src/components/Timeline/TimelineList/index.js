@@ -25,6 +25,7 @@ import SoftTypography from "components/SoftTypography";
 
 // Timeline context
 import { TimelineProvider } from "components/Timeline/context";
+import { CardContent, Paper } from "@mui/material";
 
 function TimelineList({ title, dark, children }) {
   return (
@@ -32,8 +33,6 @@ function TimelineList({ title, dark, children }) {
       <Card sx={{
         display: "flex",
         flexDirection: "column",
-        overflow: "auto",
-        overflowY: "auto",
         // justifyContent="flex-end" # DO NOT USE THIS WITH 'scroll'
       }}>
         <SoftBox height="350px" bgColor={dark ? "dark" : "white"} variant="gradient" >
@@ -42,7 +41,16 @@ function TimelineList({ title, dark, children }) {
               {title}
             </SoftTypography>
           </SoftBox>
+          <Paper elevation={0} sx={{
+            display: "flex",
+            maxHeight: 400,
+            flexDirection: "column",
+            overflow: "auto",
+            overflowY: "auto",
+            // justifyContent="flex-end" # DO NOT USE THIS WITH 'scroll'
+          }}>
           <SoftBox p={2} >{children}</SoftBox>
+          </Paper>
         </SoftBox>
       </Card>
     </TimelineProvider>
