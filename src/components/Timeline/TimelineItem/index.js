@@ -48,7 +48,7 @@ function TimelineItem({ color, icon, title, dateTime, waiting, description, badg
       : null;
 
   return (
-    <SoftBox position="relative" sx={(theme) => timelineItem(theme, { lastItem })}>
+    <SoftBox padding position="relative" sx={(theme) => timelineItem(theme, { lastItem })}>
       <SoftBox
         bgColor={isDark ? "dark" : "white"}
         width="1.625rem"

@@ -47,6 +47,7 @@ function TimelineList({ title, dark, children }) {
             flexDirection: "column",
             overflow: "auto",
             overflowY: "auto",
+            marginBottom: 1
             // justifyContent="flex-end" # DO NOT USE THIS WITH 'scroll'
           }}>
           <SoftBox p={2} >{children}</SoftBox>

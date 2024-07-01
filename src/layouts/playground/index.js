@@ -64,25 +64,27 @@ function Playground() {
 
   const [convCount1, setConvCount1] = useState(0);
   const [convCount2, setConvCount2] = useState(0);
+  const [summarizationData, setSummarizationData] = useState([])
+
   const [conversations1, setConversations1] = useState([]);
   const [conversations2, setConversations2] = useState([]);
   const [timeline1, setTimeline1] = useState("");
   const [timeline2, setTimeline2] = useState("");
 
-  function addConvItem(view, query, query_d, out_text, out_text_d, hasResponse=false) {
+  function addConvItem(view, query, query_d, out_text, out_text_d, dul, maskedCount, hasResponse=false) {
     console.log("query_d: ", query_d);
     console.log("out_text_d: ", out_text_d);
 
     if (view === 1) {
       if(hasResponse === false) {
         console.log("adding 1");
-        let conversation = { query: query, query_d: query_d, out_text: out_text, out_text_d: out_text_d, has_response: false }
+        let conversation = { query: query, query_d: query_d, out_text: out_text, out_text_d: out_text_d, dul: 0, masked_count: maskedCount, has_response: false }
         conversations1.push(conversation);
       }
       else {
         console.log("updating 1");
         conversations1.pop();
-        let conversation = { query: query, query_d: query_d, out_text: out_text, out_text_d: out_text_d, has_response: true }
+        let conversation = { query: query, query_d: query_d, out_text: out_text, out_text_d: out_text_d, dul: 0, masked_count: maskedCount, has_response: true }
         conversations1.push(conversation);
       }
 
@@ -94,13 +96,13 @@ function Playground() {
     } else if (view === 2) {
       if(!hasResponse) {
         console.log("adding 2");
-        let conversation = { query: query, query_d: query_d, out_text: out_text, out_text_d: out_text_d, has_response: false }
+        let conversation = { query: query, query_d: query_d, out_text: out_text, out_text_d: out_text_d, dul: 0, masked_count: maskedCount, has_response: false }
         conversations2.push(conversation);
       }
       else {
         console.log("updating 2");
         conversations2.pop();
-        let conversation = { query: query, query_d: query_d, out_text: out_text, out_text_d: out_text_d, has_response: true }
+        let conversation = { query: query, query_d: query_d, out_text: out_text, out_text_d: out_text_d, dul: 0, masked_count: maskedCount, has_response: true }
         conversations2.push(conversation);
       }
       console.log("Conversation2: ", conversations2);
@@ -133,7 +135,7 @@ function Playground() {
             icon="cloud"
             description={item.out_text_d}
             waiting={!item.has_response}
-            badges={["Data Utility Loss: 0", "Masked: 6"]}
+            badges={["Data Utility Loss: " + + item.dul, "Masked: " + item.masked_count]}
           />
         </div>
       ));
@@ -155,7 +157,7 @@ function Playground() {
             icon="cloud"
             description={item.out_text_d}
             waiting={!item.has_response}
-            badges={["Data Utility Loss: 0", "Masked: 6"]}
+            badges={["Data Utility Loss: " + item.dul, "Masked: " + item.masked_count]}
           />
         </div>
       ));
@@ -182,12 +184,47 @@ function Playground() {
     setPrompt(description);
   }
 
+  function getSummarization(response) {
+
+    /*
+    TODO: Below code is skipped temporaroly
+     */
+
+    return {"error": "Nothing"}
+
+    summarizationData.push(response);
+
+    if (summarizationData.length === 3) {
+      /*
+      If the length is 3, then assume we have responses from purple_model, compare_model and openai, else wait for next call
+       */
+      let url = "/api/summarization";
+      restpost(url, {responses: summarizationData})
+        .then((response) => {
+          console.log("getSummarization: postRESTApi: response: ", response);
+          if (response.hasOwnProperty("error") && response.error.status === 401) {
+            return {"error": response.error.status}
+          }
+          // setDropRate1((response['response']['summarization_trinity']['drop_rate_percent']).toString() + "%")
+          // setDropRate2((response['response']['summarization_compare_model']['drop_rate_percent']).toString() + "%")
+        })
+        .catch((err) => {
+          return {"error": err.toString()}
+        })
+    }
+
+
+  }
+
+
+
   function runQuery() {
 
     console.log(compareModel);
 
-    addConvItem(1, prompt, prompt, "Working...", "Working...", false);
-    addConvItem(2, prompt, prompt, "Working...", "Working...", false);
+    setSummarizationData([])
+    addConvItem(1, prompt, prompt, "Working...", "Working...", 0, 0, false);
+    addConvItem(2, prompt, prompt, "Working...", "Working...", 0, 0, false);
 
     let payload1 = {
       text: prompt,
@@ -199,10 +236,15 @@ function Playground() {
     restpost("/api/query", payload1).then((response) => {
       console.log(response);
       if (!response.hasOwnProperty("error")) {
-        addConvItem(1, prompt, response["result"]["query_d"], response["result"]["out_text"], response["result"]["out_text_d"], true);
+        const keys1 = Object.keys(response["result"]["label_mappings"]).filter((item) => {
+          return item.startsWith("[")
+        })
+        let masked_count = keys1.length.toString();
+        addConvItem(1, prompt, response["result"]["query_d"], response["result"]["out_text"], response["result"]["out_text_d"], 0, masked_count, true);
+        getSummarization({purple_response: response["result"]["out_text"], label_mappings: response["result"]["label_mappings"]})
       }
       else {
-        addConvItem(1, prompt, prompt, "Error!", "Error!", true);
+        addConvItem(1, prompt, prompt, "Error!", "Error!", 0, 0,true);
       }
     });
 
@@ -215,12 +257,32 @@ function Playground() {
     restpost("/api/query", payload2).then((response) => {
       console.log(response);
       if (!response.hasOwnProperty("error")) {
-        addConvItem(2, prompt, response["result"]["query_d"], response["result"]["out_text"], response["result"]["out_text_d"], true);
+        const keys1 = Object.keys(response["result"]["label_mappings"]).filter((item) => {
+          return item.startsWith("[")
+        })
+        let masked_count = keys1.length.toString();
+        addConvItem(2, prompt, response["result"]["query_d"], response["result"]["out_text"], response["result"]["out_text_d"], 0, masked_count, true);
+        getSummarization({compare_model_response: response["result"]["out_text"], label_mappings: response["result"]["label_mappings"]})
       }
       else {
-        addConvItem(2, prompt, prompt, "Error!", "Error!", true);
+        addConvItem(2, prompt, prompt, "Error!", "Error!", 0, 0, true);
       }
     });
+
+    let payload3 = {
+      query: prompt,
+    };
+    restpost("/api/openaiquery", payload3).then((response) => {
+      console.log(response);
+      if(response.hasOwnProperty("result")) {
+        getSummarization({"openai_response": response["result"]})
+      }
+      else {
+        window.alert("Failed to get summarization due to error: " + response['error'].toString());
+      }
+
+    });
+
   }
 
   const handleClickOpen = () => {
@@ -293,83 +355,12 @@ function Playground() {
 
   let settingsDialogItem = settingsDialog()
 
-
   const example_cards = examples.map((item, index) => {
     return (<Grid key={index} item xs={10} lg={2} sm={6} md={6}>
       <DefaultBlogCard action={"internal"} title={item.title} description={item.description}
                        onClick={onExamplesCard}></DefaultBlogCard>
     </Grid>);
   });
-
-  console.log(chartDataset);
-  let labels = [];
-  let data = [];
-  for (const key in chartDataset) {
-    const item = chartDataset[key];
-    labels = labels.concat(Object.keys(item));
-    data = data.concat(Object.values(item));
-  }
-  const chartData = {
-    labels: labels,
-    datasets: [
-      {
-        label: "Protected",
-        data: data,
-        color: "primary",
-      },
-    ],
-  };
-  const columns = [
-    { name: "User Group", align: "center" }, // Define column names, alignment, and optional width
-    { name: "Service Usage", align: "center" },
-  ];
-
-  console.log("queryCounts: ", queryCounts);
-  let x_axis = [];
-  let y1_axis = [];
-  let y2_axis = [];
-  Object.keys(queryCounts).forEach(function(key) {
-    const date1 = new Date(key);
-    x_axis.push(date1.toLocaleString("default", { month: "short" }) + " " + date1.getDate());
-
-    y1_axis.push(queryCounts[key]);
-
-  });
-
-  console.log(cardsData);
-  console.log(cardsData.active_users_counts);
-
-  if (!cardsData.hasOwnProperty("active_users_counts")) {
-    cardsData["active_users_counts"] = [];
-  }
-
-  Object.keys(cardsData.active_users_counts).forEach(function(key) {
-    const date1 = new Date(key);
-    // x_axis.push(date1.toLocaleString('default', { month: 'short' }) + " " + date1.getDate());
-
-    y2_axis.push(cardsData.active_users_counts[key]);
-
-  });
-
-  console.log(x_axis);
-  console.log(y1_axis);
-  console.log(y2_axis);
-
-  const dailyUsage = {
-    labels: x_axis,
-    datasets: [
-      {
-        label: "Queries",
-        color: "info",
-        data: y1_axis,
-      },
-      {
-        label: "Active Users",
-        color: "dark",
-        data: y2_axis,
-      },
-    ],
-  };
 
   useEffect(() => {
 
@@ -380,9 +371,6 @@ function Playground() {
           window.location.href = "/error";
         } else {
           setCardsData(response["dashboard_data"]);
-          setChartDataset(response.dashboard_data.chart_data_set);
-          setQueryCounts(response.dashboard_data.query_counts);
-          // setActiveUsersCounts(response.dashboard_data.active_users_count);
         }
       })
       .catch((err) => {
@@ -391,20 +379,6 @@ function Playground() {
       });
   }, []);
 
-  const rows = [
-    {
-      "User Group": "HR Group",
-      "Service Usage": "53%",
-    },
-    {
-      "User Group": "Special Project Group",
-      "Service Usage": "35%",
-    },
-    {
-      "User Group": "Dev Team",
-      "Service Usage": "12%",
-    },
-  ];
 
   const compare_models = {
     "gpt4": "GPT4",
@@ -500,7 +474,6 @@ function Playground() {
               {example_cards}
               </Grid>
             </Grid>
-
           </Grid>
 
       <Footer />
