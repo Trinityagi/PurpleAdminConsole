@@ -269,19 +269,19 @@ function Playground() {
       }
     });
 
-    let payload3 = {
-      query: prompt,
-    };
-    restpost("/api/openaiquery", payload3).then((response) => {
-      console.log(response);
-      if(response.hasOwnProperty("result")) {
-        getSummarization({"openai_response": response["result"]})
-      }
-      else {
-        window.alert("Failed to get summarization due to error: " + response['error'].toString());
-      }
-
-    });
+    // let payload3 = {
+    //   query: prompt,
+    // };
+    // restpost("/api/openaiquery", payload3).then((response) => {
+    //   console.log(response);
+    //   if(response.hasOwnProperty("result")) {
+    //     getSummarization({"openai_response": response["result"]})
+    //   }
+    //   else {
+    //     window.alert("Failed to get summarization due to error: " + response['error'].toString());
+    //   }
+    //
+    // });
 
   }
 
