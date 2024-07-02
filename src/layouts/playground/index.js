@@ -240,10 +240,6 @@ function Playground() {
 
   }
 
-  function onTempTest() {
-    getSummarization();
-  }
-
   function runQuery() {
 
     console.log(compareModel);
@@ -505,7 +501,6 @@ function Playground() {
               </Tooltip>
 
             </Grid>
-            <SoftButton onClick={onTempTest}>Test summa</SoftButton>
           </Grid>
 
       <Footer />
