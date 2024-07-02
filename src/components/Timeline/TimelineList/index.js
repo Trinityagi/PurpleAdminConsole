@@ -27,7 +27,7 @@ import SoftTypography from "components/SoftTypography";
 import { TimelineProvider } from "components/Timeline/context";
 import { CardContent, Paper } from "@mui/material";
 
-function TimelineList({ title, dark, children }) {
+function TimelineList({ title, selectControl, dark, children }) {
   return (
     <TimelineProvider value={dark}>
       <Card sx={{
@@ -36,10 +36,12 @@ function TimelineList({ title, dark, children }) {
         // justifyContent="flex-end" # DO NOT USE THIS WITH 'scroll'
       }}>
         <SoftBox height="350px" bgColor={dark ? "dark" : "white"} variant="gradient" >
-          <SoftBox pt={1} px={3}>
-            <SoftTypography variant="h6" fontWeight="medium" color={dark ? "white" : "dark"}>
+          <SoftBox pt={1} px={3} display="flex" gap alignItems="center">
+            <SoftTypography variant={"button"} verticalAlign={"middle"} fontWeight="medium" color={dark ? "white" : "dark"}>
               {title}
             </SoftTypography>
+            <SoftBox sx={{ width: "150px" }} >{selectControl}</SoftBox>
+
           </SoftBox>
           <Paper elevation={0} sx={{
             display: "flex",
@@ -68,6 +70,7 @@ TimelineList.propTypes = {
   title: PropTypes.string,
   dark: PropTypes.bool,
   children: PropTypes.node,
+  selectControl: PropTypes.node,
 };
 
 export default TimelineList;

@@ -380,6 +380,8 @@ function Playground() {
   }, []);
 
 
+
+
   const compare_models = {
     "gpt4": "GPT4",
     "gpt3": "GPT3",
@@ -389,6 +391,32 @@ function Playground() {
     "claude": "Claude",
     "mixtral": "Mixtral",
   };
+
+  let compare_model1 = (
+    <Select
+    labelId="source-label"
+    id="source"
+    value="purple"
+    disabled
+    label="Purple Model"
+  >
+      <MenuItem value={"purple"}>Purple Model</MenuItem>
+  </Select>);
+
+  let compare_model2 = (
+    <Select
+      labelId="compare-label"
+      id="compare"
+      value={compareModel}
+      label="Compare"
+      onChange={(event) => {
+        console.log(event);
+        setCompareModel(event.target.value);
+      }}
+    >
+      {Object.keys(compare_models).map((item, index) => (
+        <MenuItem key={index} value={item}>{compare_models[item]}</MenuItem>))}
+    </Select>);
 
   const ITEM_HEIGHT = 100;
   const ITEM_PADDING_TOP = 8;
@@ -410,69 +438,49 @@ function Playground() {
           <Grid container spacing={3} padding={0}>
             <Grid item xs={10} >
               <Grid container spacing={3}>
-                <Grid xs={3} sm={3} item >
-                  <SoftTypography id="compare-label" variant={"button"}>Compare with:</SoftTypography>
-                  <Select
-                    labelId="compare-label"
-                    id="compare"
-                    value={compareModel}
-                    label="Compare"
-                    onChange={(event) => {
-                      console.log(event);
-                      setCompareModel(event.target.value);
-                    }}
-                  >
-                    {Object.keys(compare_models).map((item, index) => (
-                      <MenuItem key={index} value={item}>{compare_models[item]}</MenuItem>))}
-                  </Select>
-                </Grid>
-                <Grid xs={1} sm={1} item
-                      direction="column"
-                      align="left"
-                      style={{ display: "flex", justifyContent: "flex-end" }}
-                >
-                  <Tooltip key={"clearchat"} title={"Settings"} placement="top">
-                    <SoftButton iconOnly display="flex" position="baseline" variant={"contained"}  onClick={handleClickOpen}><Icon>settings</Icon></SoftButton>
-                  </Tooltip>
-                </Grid>
-                <Grid xs={1} sm={1} item
-                      direction="column"
-                      align="left"
-                      style={{ display: "flex", justifyContent: "flex-end" }}
-                >
-                  <Tooltip key={"clearchat"} title={"Clear chat"} placement="top">
-                    <SoftButton iconOnly display="flex" position="baseline" variant={"contained"}  onClick={clearContents}><Icon>delete</Icon></SoftButton>
-                  </Tooltip>
-                </Grid>
+
               </Grid>
             </Grid>
-            <Grid item xs={9} xl={9} >
+            <Grid item xs={8} xl={8} >
               <SoftInput placeholder="Type here..." value={prompt} multiline rows={3} onChange={(event) => {
                 setPrompt(event.target.value);
               }} />
             </Grid>
-            <Grid item xs={2} justifyItems={"flex-end"} >
+            <Grid item xs={1} xl={1} justifyItems={"flex-end"} >
               <SoftButton color="primary" onClick={runQuery}><Icon
                 sx={{ fontWeight: "bold" }}>send</Icon>&nbsp;&nbsp;Run</SoftButton>
             </Grid>
+            <Grid item xs={1} xl={1}
+                  align="left"
+                  style={{ display: "flex", justifyContent: "flex-end" }}
+            >
+              <Tooltip key={"clearchat"} title={"Settings"} placement="top">
+                <SoftButton iconOnly display="flex" position="baseline" variant={"contained"}  onClick={handleClickOpen}><Icon>settings</Icon></SoftButton>
+              </Tooltip>
+            </Grid>
             <Grid item xs={10} >
-              <Grid container justifyContent="center" gap={2} spacing={3} padding={2} >
+              <Grid container  gap={2} spacing={3} padding={2} >
                 {example_cards}
               </Grid>
             </Grid>
             <Grid item xs={5} sm={5}>
               <SoftBox sx={{ height: '100%' }} >
-                <TimelineList title="Purple Model" >
+                <TimelineList title="Model" selectControl={compare_model1} >
                   {timeline1}
                 </TimelineList>
               </SoftBox>
             </Grid>
             <Grid item xs={5}  sm={5} >
               <SoftBox rows={15}>
-                <TimelineList title={compare_models[compareModel]}>
+                <TimelineList title="Model" selectControl={compare_model2} >
                   {timeline2}
                 </TimelineList>
               </SoftBox>
+            </Grid>
+            <Grid item xs={10} align="right">
+              <Tooltip key={"clearchat"} title={"Clear chat"} placement="top">
+              <SoftButton onClick={clearContents}>Clear All</SoftButton>
+              </Tooltip>
             </Grid>
 
           </Grid>
