@@ -356,10 +356,10 @@ function Playground() {
   let settingsDialogItem = settingsDialog()
 
   const example_cards = examples.map((item, index) => {
-    return (<Grid key={index} item xs={10} lg={2} sm={6} md={6}>
-      <DefaultBlogCard action={"internal"} title={item.title} description={item.description}
+    return (
+      <DefaultBlogCard key={index} action={"internal"} title={item.title} description={item.description}
                        onClick={onExamplesCard}></DefaultBlogCard>
-    </Grid>);
+    );
   });
 
   useEffect(() => {
@@ -407,7 +407,7 @@ function Playground() {
     <DashboardLayout>
       <DashboardNavbar notifCount={cardsData["feedbacks_count"]} />
       {settingsDialogItem}
-          <Grid container spacing={3} padding={6}>
+          <Grid container spacing={3} padding={0}>
             <Grid item xs={10} >
               <Grid container spacing={3}>
                 <Grid xs={3} sm={3} item >
@@ -455,6 +455,11 @@ function Playground() {
               <SoftButton color="primary" onClick={runQuery}><Icon
                 sx={{ fontWeight: "bold" }}>send</Icon>&nbsp;&nbsp;Run</SoftButton>
             </Grid>
+            <Grid item xs={10} >
+              <Grid container justifyContent="center" gap={2} spacing={3} padding={2} >
+                {example_cards}
+              </Grid>
+            </Grid>
             <Grid item xs={5} sm={5}>
               <SoftBox sx={{ height: '100%' }} >
                 <TimelineList title="Purple Model" >
@@ -469,11 +474,7 @@ function Playground() {
                 </TimelineList>
               </SoftBox>
             </Grid>
-            <Grid item xs={10} >
-              <Grid container justifyContent="center" spacing={3}>
-              {example_cards}
-              </Grid>
-            </Grid>
+
           </Grid>
 
       <Footer />

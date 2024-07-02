@@ -43,7 +43,6 @@ function DefaultBlogCard({ image, category, title, description, action, onClick 
       display: "flex",
       flexDirection: "column",
       backgroundColor: "transparent",
-
       overflow: "visible",
     }}>
 
