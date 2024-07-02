@@ -83,9 +83,20 @@ function Playground() {
       }
       else {
         console.log("updating 1");
-        conversations1.pop();
-        let conversation = { query: query, query_d: query_d, out_text: out_text, out_text_d: out_text_d, dul: 0, masked_count: maskedCount, has_response: true }
-        conversations1.push(conversation);
+        let old_conversation = conversations1.pop();
+        if(query) {
+          // if the update is with query data
+          let conversation = { query: query, query_d: query_d, out_text: out_text, out_text_d: out_text_d, dul: 0, masked_count: maskedCount, has_response: true }
+          conversations1.push(conversation);
+        }
+        else {
+          // if the update is only with summarization data, without query data
+          console.log("old_conversation1: ", old_conversation);
+          console.log("conversations1: ", conversations1);
+          old_conversation["dul"] = dul;
+          old_conversation["masked_count"] = maskedCount;
+          conversations1.push(old_conversation);
+        }
       }
 
       console.log("Conversation1: ", conversations1);
@@ -101,9 +112,20 @@ function Playground() {
       }
       else {
         console.log("updating 2");
-        conversations2.pop();
-        let conversation = { query: query, query_d: query_d, out_text: out_text, out_text_d: out_text_d, dul: 0, masked_count: maskedCount, has_response: true }
-        conversations2.push(conversation);
+        let old_conversation = conversations2.pop();
+        if(query) {
+          let conversation = { query: query, query_d: query_d, out_text: out_text, out_text_d: out_text_d, dul: 0, masked_count: maskedCount, has_response: true }
+          conversations2.push(conversation);
+        }
+        else {
+          // if the update is only with summarization data, without query data
+          console.log("conversations2: ", conversations2);
+          console.log("old_conversation2: ", old_conversation);
+          old_conversation["dul"] = dul;
+          old_conversation["masked_count"] = maskedCount;
+          conversations2.push(old_conversation);
+        }
+
       }
       console.log("Conversation2: ", conversations2);
       setConversations2(conversations2);
@@ -186,13 +208,12 @@ function Playground() {
 
   function getSummarization(response) {
 
-    /*
-    TODO: Below code is skipped temporaroly
-     */
+    console.log("getSummarization: ", response);
 
-    return {"error": "Nothing"}
+    if(response)
+      summarizationData.push(response);
 
-    summarizationData.push(response);
+    console.log("summarizationData: ", summarizationData);
 
     if (summarizationData.length === 3) {
       /*
@@ -201,10 +222,13 @@ function Playground() {
       let url = "/api/summarization";
       restpost(url, {responses: summarizationData})
         .then((response) => {
-          console.log("getSummarization: postRESTApi: response: ", response);
+          console.log("getSummarization: response: ", response);
           if (response.hasOwnProperty("error") && response.error.status === 401) {
             return {"error": response.error.status}
           }
+
+          addConvItem(1, null, null, null, null, response["response"]["summarization_trinity"]["drop_rate_percent"], response["response"]["summarization_trinity"]["len_mapping"], true);
+          addConvItem(2, null, null, null, null, response["response"]["summarization_compare_model"]["drop_rate_percent"], response["response"]["summarization_compare_model"]["len_mapping"], true);
           // setDropRate1((response['response']['summarization_trinity']['drop_rate_percent']).toString() + "%")
           // setDropRate2((response['response']['summarization_compare_model']['drop_rate_percent']).toString() + "%")
         })
@@ -216,7 +240,9 @@ function Playground() {
 
   }
 
-
+  function onTempTest() {
+    getSummarization();
+  }
 
   function runQuery() {
 
@@ -241,7 +267,7 @@ function Playground() {
         })
         let masked_count = keys1.length.toString();
         addConvItem(1, prompt, response["result"]["query_d"], response["result"]["out_text"], response["result"]["out_text_d"], 0, masked_count, true);
-        getSummarization({purple_response: response["result"]["out_text"], label_mappings: response["result"]["label_mappings"]})
+        getSummarization({purple_response: response["result"]["out_text"], "prompt": prompt, label_mappings: response["result"]["label_mappings"]})
       }
       else {
         addConvItem(1, prompt, prompt, "Error!", "Error!", 0, 0,true);
@@ -269,19 +295,19 @@ function Playground() {
       }
     });
 
-    // let payload3 = {
-    //   query: prompt,
-    // };
-    // restpost("/api/openaiquery", payload3).then((response) => {
-    //   console.log(response);
-    //   if(response.hasOwnProperty("result")) {
-    //     getSummarization({"openai_response": response["result"]})
-    //   }
-    //   else {
-    //     window.alert("Failed to get summarization due to error: " + response['error'].toString());
-    //   }
-    //
-    // });
+    let payload3 = {
+      query: prompt,
+    };
+    restpost("/api/openaiquery", payload3).then((response) => {
+      console.log(response);
+      if(response.hasOwnProperty("result")) {
+        getSummarization({"openai_response": response["result"]})
+      }
+      else {
+        window.alert("Failed to get summarization due to error: " + response['error'].toString());
+      }
+
+    });
 
   }
 
@@ -436,43 +462,39 @@ function Playground() {
       <DashboardNavbar notifCount={cardsData["feedbacks_count"]} />
       {settingsDialogItem}
           <Grid container spacing={3} padding={0}>
-            <Grid item xs={10} >
+            <Grid item xs={10} xl={10} md={10} >
               <Grid container spacing={3}>
-
               </Grid>
             </Grid>
-            <Grid item xs={8} xl={8} >
+            <Grid item xs={6} xl={8} md={8} lg={8}>
               <SoftInput placeholder="Type here..." value={prompt} multiline rows={3} onChange={(event) => {
                 setPrompt(event.target.value);
               }} />
             </Grid>
-            <Grid item xs={1} xl={1} justifyItems={"flex-end"} >
+            <Grid item xs={1} xl={1} md={1} lg={1} justifyItems={"flex-end"} >
               <SoftButton color="primary" onClick={runQuery}><Icon
                 sx={{ fontWeight: "bold" }}>send</Icon>&nbsp;&nbsp;Run</SoftButton>
             </Grid>
-            <Grid item xs={1} xl={1}
-                  align="left"
-                  style={{ display: "flex", justifyContent: "flex-end" }}
-            >
+            <Grid item xs={1} xl={1} md={1} lg={1} align="left">
               <Tooltip key={"clearchat"} title={"Settings"} placement="top">
                 <SoftButton iconOnly display="flex" position="baseline" variant={"contained"}  onClick={handleClickOpen}><Icon>settings</Icon></SoftButton>
               </Tooltip>
             </Grid>
             <Grid item xs={10} >
-              <Grid container  gap={2} spacing={3} padding={2} >
+              <Grid container  gap={2} spacing={3} padding={2} marginRight={2}>
                 {example_cards}
               </Grid>
             </Grid>
             <Grid item xs={5} sm={5}>
               <SoftBox sx={{ height: '100%' }} >
-                <TimelineList title="Model" selectControl={compare_model1} >
+                <TimelineList title="Safety Model" selectControl={compare_model1} >
                   {timeline1}
                 </TimelineList>
               </SoftBox>
             </Grid>
             <Grid item xs={5}  sm={5} >
               <SoftBox rows={15}>
-                <TimelineList title="Model" selectControl={compare_model2} >
+                <TimelineList title="Safety Model" selectControl={compare_model2} >
                   {timeline2}
                 </TimelineList>
               </SoftBox>
@@ -481,8 +503,9 @@ function Playground() {
               <Tooltip key={"clearchat"} title={"Clear chat"} placement="top">
               <SoftButton onClick={clearContents}>Clear All</SoftButton>
               </Tooltip>
-            </Grid>
 
+            </Grid>
+            <SoftButton onClick={onTempTest}>Test summa</SoftButton>
           </Grid>
 
       <Footer />
