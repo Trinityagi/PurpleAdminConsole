@@ -489,7 +489,7 @@ function Playground() {
               </SoftBox>
             </Grid>
             <Grid item xs={5}  sm={5} >
-              <SoftBox rows={15}>
+              <SoftBox sx={{ height: '100%' }}>
                 <TimelineList title="Safety Model" selectControl={compare_model2} >
                   {timeline2}
                 </TimelineList>

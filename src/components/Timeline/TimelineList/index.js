@@ -35,7 +35,7 @@ function TimelineList({ title, selectControl, dark, children }) {
         flexDirection: "column",
         // justifyContent="flex-end" # DO NOT USE THIS WITH 'scroll'
       }}>
-        <SoftBox height="350px" bgColor={dark ? "dark" : "white"} variant="gradient" >
+        <SoftBox height="450px" bgColor={dark ? "dark" : "white"} variant="gradient" >
           <SoftBox pt={1} px={3} display="flex" gap alignItems="center">
             <SoftTypography variant={"button"} verticalAlign={"middle"} fontWeight="medium" color={dark ? "white" : "dark"}>
               {title}
